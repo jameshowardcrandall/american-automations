@@ -4,6 +4,24 @@ html, body { margin: 0; padding: 0; }
 ::selection { background: #9C3B2C; color: #fff; }
 html { scroll-behavior: smooth; }
 
+/* ---- Theme tokens. Dark mode swaps these; navy accent panels stay navy. ---- */
+[data-theme] {
+  --bg: #F4F5F7; --card: #fff; --border: #E2E5EA;
+  --ink: #16243F; --muted: #6B7480;
+  --header: rgba(244,245,247,.9);
+  transition: background .3s ease, color .3s ease;
+}
+[data-theme="dark"] {
+  --bg: #0E1726; --card: #1B2A47; --border: #2B3C5C;
+  --ink: #EAEFF7; --muted: #9FB0C9;
+  --header: rgba(14,23,38,.92);
+}
+[data-theme="dark"] .lf-card { background: #1B2A47 !important; border-color: #2B3C5C !important; }
+[data-theme="dark"] .lf-card:hover { border-color: #3A4F77 !important; }
+[data-theme="dark"] .lf-card p, [data-theme="dark"] .lf-card .lf-body { color: rgba(234,239,247,.72) !important; }
+[data-theme="dark"] .lf-pill { background: #16243F !important; border-color: #2B3C5C !important; color: #C7D4E8 !important; }
+[data-theme="dark"] .lf-faq { background: #1B2A47 !important; border-color: #2B3C5C !important; }
+
 @keyframes lfpulse { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
 @keyframes lfrise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -18,6 +36,8 @@ html { scroll-behavior: smooth; }
 @keyframes lfleak { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
 @keyframes lfblink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 @keyframes lfmarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes lfdrop { 0% { transform: translateY(0) scale(1); opacity: 0; } 15% { opacity: 1; } 100% { transform: translateY(34px) scale(.5); opacity: 0; } }
+@keyframes lfbar { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 
 /* Hover states — the design prototype used a non-standard style-hover attribute;
    recreate those interactions with real CSS so the page behaves identically. */
@@ -35,6 +55,13 @@ html { scroll-behavior: smooth; }
 /* Scroll-reveal — elements start shifted/transparent, settle when in view. */
 .lf-reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
 .lf-reveal.is-in { opacity: 1; transform: none; }
+
+/* Mobile nav — hide the inline links so the logo, theme toggle and CTA fit. */
+@media (max-width: 680px) {
+  .lf-nav-links { display: none !important; }
+  .lf-header-inner { padding: 12px 16px !important; }
+  .lf-cta-nav { padding: 9px 13px !important; font-size: 13px !important; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }

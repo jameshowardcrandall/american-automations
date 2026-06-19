@@ -1,1 +1,1 @@
-{"root":["./src/leadfunnel.tsx","./src/leakcalculator.tsx","./src/main.tsx","./src/motion.tsx"],"version":"5.9.3"}
+{"root":["./src/exitintent.tsx","./src/faq.tsx","./src/leadfunnel.tsx","./src/leakcalculator.tsx","./src/leaksdiagram.tsx","./src/proof.tsx","./src/stickycta.tsx","./src/config.ts","./src/main.tsx","./src/motion.tsx","./src/state.tsx"],"version":"5.9.3"}
