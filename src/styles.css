@@ -1,14 +1,43 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 #root { min-height: 100vh; }
-::selection { background: #16243F; color: #fff; }
+::selection { background: #9C3B2C; color: #fff; }
+html { scroll-behavior: smooth; }
 
 @keyframes lfpulse { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
 @keyframes lfrise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Soft red glow that breathes on the primary CTAs — draws the eye without shouting. */
+@keyframes lfglow {
+  0%, 100% { box-shadow: 0 8px 22px -6px rgba(156,59,44,.5), 0 0 0 0 rgba(156,59,44,.45); }
+  50%      { box-shadow: 0 8px 28px -4px rgba(156,59,44,.65), 0 0 0 7px rgba(156,59,44,0); }
+}
+/* Slow drift of the blueprint grid behind the hero. */
+@keyframes lfgrid { from { background-position: 0 0, 0 0; } to { background-position: 44px 44px, 44px 44px; } }
+/* Live "leak" dot. */
+@keyframes lfleak { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
+@keyframes lfblink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
 
 /* Hover states — the design prototype used a non-standard style-hover attribute;
    recreate those interactions with real CSS so the page behaves identically. */
 .lf-nav-link { color: #6B7480; transition: color .15s ease; }
 .lf-nav-link:hover { color: #16243F; }
-.lf-cta-nav:hover { background: #9C3B2C !important; }
-.lf-cta-red:hover { background: #7E2F22 !important; }
+.lf-cta-nav { transition: background .18s ease, transform .18s ease; }
+.lf-cta-nav:hover { background: #9C3B2C !important; transform: translateY(-1px); }
+.lf-cta-red { animation: lfglow 3.2s ease-in-out infinite; transition: background .18s ease, transform .18s ease; }
+.lf-cta-red:hover { background: #7E2F22 !important; transform: translateY(-2px); }
+
+/* Card hover lift + red top-accent reveal. */
+.lf-card { transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease; }
+.lf-card:hover { transform: translateY(-4px); box-shadow: 0 18px 40px -22px rgba(22,36,63,.45); border-color: #C9B0AA; }
+
+/* Scroll-reveal — elements start shifted/transparent, settle when in view. */
+.lf-reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s cubic-bezier(.2,.7,.2,1), transform .6s cubic-bezier(.2,.7,.2,1); }
+.lf-reveal.is-in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .lf-reveal { opacity: 1; transform: none; transition: none; }
+  .lf-cta-red { animation: none; }
+  .lf-card:hover, .lf-cta-red:hover, .lf-cta-nav:hover { transform: none; }
+}

@@ -1,4 +1,5 @@
 import { useMemo, useState, type CSSProperties } from 'react';
+import { Reveal, CountUp, LiveLeak } from './motion';
 
 /* ============================================================================
    American Automations — Lead Funnel
@@ -128,39 +129,72 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
 
       {/* HERO */}
       <section style={{ maxWidth: 1180, margin: '0 auto', padding: '54px 24px 20px' }}>
-        <div style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 36px' }}>
+        <Reveal style={{ textAlign: 'center', maxWidth: 760, margin: '0 auto 28px' }}>
           <span style={{ display: 'inline-flex', alignItems: 'center', gap: 9, fontFamily: SAIRA, fontWeight: 700, fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: '#9C3B2C', background: '#F6E9E6', padding: '8px 16px', borderRadius: 4 }}>
             <span style={{ width: 7, height: 7, borderRadius: '50%', background: '#9C3B2C', display: 'inline-block', animation: 'lfpulse 2.2s ease-in-out infinite' }} />
             Veteran-Owned · Free Lead-Leak Audit for plumbing &amp; HVAC
           </span>
-        </div>
+        </Reveal>
 
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'stretch', flexWrap: 'wrap', border: '1px solid #E2E5EA', borderRadius: 6, background: '#fff', boxShadow: '0 1px 2px rgba(22,36,63,.04),0 24px 60px -28px rgba(22,36,63,.16)', overflow: 'hidden' }}>
-
-          {/* HOOK A — lead with the leak */}
-          {showA && (
-            <div style={colStyle}>
-              {isCompare && <div style={{ fontFamily: SAIRA, fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: '#9AA3AE', marginBottom: 18 }}>Hook A · lead with the leak</div>}
-              <h1 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 38, lineHeight: 1.08, margin: '0 0 18px', textWrap: 'balance' }}>You're paying to generate jobs — then losing them before they're booked.</h1>
-              <p style={{ fontSize: 17, color: '#6B7480', margin: '0 0 26px', textWrap: 'pretty' }}>Missed calls, web leads that sit for hours, estimates that go cold. Every shop leaks revenue in the same predictable spots. We map yours and put a dollar figure on it — in one 20-minute call.</p>
-              <a href="#book" className="lf-cta-red" style={redCta}>Get my free lead-leak audit →</a>
-              <p style={{ fontSize: 13.5, color: '#9AA3AE', margin: '14px 0 0' }}>No obligation. You keep the findings either way.</p>
+        {/* Dark "command panel" hero — blueprint grid + glowing red accents. */}
+        <Reveal>
+          <div style={{
+            position: 'relative', borderRadius: 10, overflow: 'hidden',
+            background: 'radial-gradient(120% 120% at 80% -10%, #21365C 0%, #16243F 46%, #0E1A30 100%)',
+            border: '1px solid #2B3C5C',
+            boxShadow: '0 1px 2px rgba(0,0,0,.3), 0 40px 90px -40px rgba(8,16,32,.85)',
+          }}>
+            {/* blueprint grid texture */}
+            <div aria-hidden style={{
+              position: 'absolute', inset: 0, pointerEvents: 'none', opacity: .5,
+              backgroundImage: 'linear-gradient(rgba(120,150,200,.10) 1px, transparent 1px), linear-gradient(90deg, rgba(120,150,200,.10) 1px, transparent 1px)',
+              backgroundSize: '44px 44px, 44px 44px', animation: 'lfgrid 18s linear infinite',
+            }} />
+            {/* corner ticker tape (brand stripe) */}
+            <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, display: 'flex' }}>
+              <div style={{ flex: 1, background: '#16243F' }} /><div style={{ width: 120, background: '#9C3B2C' }} /><div style={{ width: 56, background: '#C2C8D1' }} />
             </div>
-          )}
 
-          {showDivider && <div style={{ width: 1, background: '#E2E5EA', alignSelf: 'stretch' }} />}
-
-          {/* HOOK B — lead with the money */}
-          {showB && (
-            <div style={colStyle}>
-              {isCompare && <div style={{ fontFamily: SAIRA, fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: '#9AA3AE', marginBottom: 18 }}>Hook B · lead with the money</div>}
-              <h1 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 38, lineHeight: 1.08, margin: '0 0 18px', textWrap: 'balance' }}>Most shops are losing <span style={{ color: '#9C3B2C' }}>$3,000+ a month</span> in jobs they already paid to get.</h1>
-              <p style={{ fontSize: 17, color: '#6B7480', margin: '0 0 26px', textWrap: 'pretty' }}>We find exactly where it's leaking — missed calls, slow replies, dead estimates — then plug the biggest one first. No new ad spend. No risk.</p>
-              <a href="#book" className="lf-cta-red" style={redCta}>Show me what I'm losing →</a>
-              <p style={{ fontSize: 13.5, color: '#9AA3AE', margin: '14px 0 0' }}>20-minute audit. We do the math, you keep the report.</p>
+            {/* LEAK METER band */}
+            <div style={{ position: 'relative', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '6px 16px', padding: '18px 24px 0', textAlign: 'center' }}>
+              <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontFamily: SAIRA, fontWeight: 700, fontSize: 12, letterSpacing: '.16em', textTransform: 'uppercase', color: 'rgba(255,255,255,.55)' }}>
+                <span style={{ position: 'relative', width: 9, height: 9 }}>
+                  <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#E0795C', animation: 'lfblink 1.4s steps(1) infinite' }} />
+                  <span style={{ position: 'absolute', inset: 0, borderRadius: '50%', background: '#E0795C', animation: 'lfleak 1.6s ease-out infinite' }} />
+                </span>
+                Industry avg leaking this month
+              </span>
+              <LiveLeak style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 30, letterSpacing: '.01em', color: '#E0795C', fontVariantNumeric: 'tabular-nums' }} />
             </div>
-          )}
-        </div>
+
+            <div style={{ position: 'relative', display: 'flex', justifyContent: 'center', alignItems: 'stretch', flexWrap: 'wrap' }}>
+
+              {/* HOOK A — lead with the leak */}
+              {showA && (
+                <div style={colStyle}>
+                  {isCompare && <div style={{ fontFamily: SAIRA, fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.45)', marginBottom: 18 }}>Hook A · lead with the leak</div>}
+                  <h1 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 40, lineHeight: 1.06, margin: '0 0 18px', color: '#fff', textWrap: 'balance' }}>You're paying to generate jobs — <span style={{ color: '#E0795C' }}>then losing them</span> before they're booked.</h1>
+                  <p style={{ fontSize: 17, color: 'rgba(255,255,255,.72)', margin: '0 0 26px', textWrap: 'pretty' }}>Missed calls, web leads that sit for hours, estimates that go cold. Every shop leaks revenue in the same predictable spots. We map yours and put a dollar figure on it — in one 20-minute call.</p>
+                  <a href="#book" className="lf-cta-red" style={redCta}>Get my free lead-leak audit →</a>
+                  <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,.5)', margin: '14px 0 0' }}>No obligation. You keep the findings either way.</p>
+                </div>
+              )}
+
+              {showDivider && <div style={{ width: 1, background: 'rgba(255,255,255,.12)', alignSelf: 'stretch' }} />}
+
+              {/* HOOK B — lead with the money */}
+              {showB && (
+                <div style={colStyle}>
+                  {isCompare && <div style={{ fontFamily: SAIRA, fontSize: 12, fontWeight: 700, letterSpacing: '.08em', textTransform: 'uppercase', color: 'rgba(255,255,255,.45)', marginBottom: 18 }}>Hook B · lead with the money</div>}
+                  <h1 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 40, lineHeight: 1.06, margin: '0 0 18px', color: '#fff', textWrap: 'balance' }}>Most shops are losing <span style={{ color: '#E0795C' }}>$3,000+ a month</span> in jobs they already paid to get.</h1>
+                  <p style={{ fontSize: 17, color: 'rgba(255,255,255,.72)', margin: '0 0 26px', textWrap: 'pretty' }}>We find exactly where it's leaking — missed calls, slow replies, dead estimates — then plug the biggest one first. No new ad spend. No risk.</p>
+                  <a href="#book" className="lf-cta-red" style={redCta}>Show me what I'm losing →</a>
+                  <p style={{ fontSize: 13.5, color: 'rgba(255,255,255,.5)', margin: '14px 0 0' }}>20-minute audit. We do the math, you keep the report.</p>
+                </div>
+              )}
+            </div>
+          </div>
+        </Reveal>
 
         {/* guarantee badges */}
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 10, marginTop: 24 }}>
@@ -199,10 +233,10 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
       {/* WHERE THE MONEY LEAKS */}
       {showLeaks && (
         <section style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px 24px' }}>
-          <div style={{ textAlign: 'center', marginBottom: 36 }}>
+          <Reveal style={{ textAlign: 'center', marginBottom: 36 }}>
             <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 30, margin: '0 0 10px' }}>Where the money leaks out</h2>
             <p style={{ fontSize: 16.5, color: '#6B7480', margin: 0 }}>It's almost always the same six spots — in order of how much it hurts.</p>
-          </div>
+          </Reveal>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 14 }}>
             {[
               ['Missed calls', 'The caller dials your competitor in seconds. The #1 leak in home services.'],
@@ -212,7 +246,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
               ['Reviews nobody asks for', "They've got 14, the competitor has 300. That gap costs you LSA ranking."],
               ['Flying blind', 'No clear view of revenue, job margin, or which marketing actually works.'],
             ].map(([title, body], i) => (
-              <div key={title} style={{ background: '#fff', border: '1px solid #E2E5EA', borderRadius: 6, padding: 20, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
+              <div key={title} className="lf-card" style={{ background: '#fff', border: '1px solid #E2E5EA', borderRadius: 6, padding: 20, display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                 <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 14, color: '#fff', background: '#16243F', minWidth: 26, height: 26, borderRadius: 6, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', marginTop: 2 }}>{i + 1}</span>
                 <div>
                   <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 16, marginBottom: 3 }}>{title}</div>
@@ -226,17 +260,17 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
 
       {/* HOW IT WORKS */}
       <section id="how" style={{ maxWidth: 1100, margin: '0 auto', padding: '72px 24px 24px' }}>
-        <div style={{ textAlign: 'center', marginBottom: 44 }}>
+        <Reveal style={{ textAlign: 'center', marginBottom: 44 }}>
           <p style={{ fontFamily: SAIRA, fontWeight: 600, fontSize: 14, textTransform: 'uppercase', color: '#9C3B2C', margin: '0 0 8px', letterSpacing: '.16em' }}>How it works</p>
           <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 32, margin: 0 }}>We diagnose first. We don't pitch.</h2>
-        </div>
+        </Reveal>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 20 }}>
           {[
             ['01', 'We run the audit', 'A 20-minute call where we map where jobs leak out and turn it into a dollar number. Keep the report either way.'],
             ['02', 'We plug the biggest leak first', 'Usually missed calls + instant lead response. We fix the #1 leak and prove the ROI before anything else.'],
             ['03', 'We automate the rest', "Follow-ups, review requests, and reactivating old leads you'd written off — all running in the background."],
           ].map(([num, title, body]) => (
-            <div key={num} style={{ background: '#fff', border: '1px solid #E2E5EA', borderRadius: 6, padding: 30 }}>
+            <div key={num} className="lf-card" style={{ background: '#fff', border: '1px solid #E2E5EA', borderRadius: 6, padding: 30 }}>
               <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 15, color: '#16243F', background: '#EEF1F5', width: 44, height: 44, borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 18 }}>{num}</div>
               <h3 style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 20, margin: '0 0 9px' }}>{title}</h3>
               <p style={{ fontSize: 15.5, color: '#6B7480', margin: 0 }}>{body}</p>
@@ -247,19 +281,19 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
 
       {/* RESULTS / CASE STUDY */}
       <section id="proof" style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px 24px' }}>
-        <div style={{ background: '#16243F', borderRadius: 6, padding: 48, color: '#fff', position: 'relative', overflow: 'hidden' }}>
+        <Reveal style={{ background: '#16243F', borderRadius: 6, padding: 48, color: '#fff', position: 'relative', overflow: 'hidden' }}>
           <span style={{ position: 'absolute', top: 20, right: 22, fontSize: 11.5, fontWeight: 600, letterSpacing: '.05em', textTransform: 'uppercase', color: 'rgba(255,255,255,.4)', border: '1px solid rgba(255,255,255,.18)', padding: '5px 10px', borderRadius: 6 }}>Sample result — swap in your case study</span>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 40, alignItems: 'center' }}>
             <div>
-              <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 64, lineHeight: 1, color: '#fff' }}>$11,400</div>
+              <CountUp value={11400} prefix="$" duration={1700} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 64, lineHeight: 1, color: '#fff', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
               <div style={{ fontSize: 16, color: 'rgba(255,255,255,.7)', marginTop: 8 }}>recovered in the first 90 days — with zero new ad spend.</div>
               <div style={{ display: 'flex', gap: 28, marginTop: 28, flexWrap: 'wrap' }}>
                 <div>
-                  <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 26, color: '#E0795C' }}>147</div>
+                  <CountUp value={147} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 26, color: '#E0795C', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
                   <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>jobs booked from<br />leads they'd written off</div>
                 </div>
                 <div>
-                  <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 26, color: '#E0795C' }}>14 → 92</div>
+                  <CountUp value={92} prefix="14 → " style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 26, color: '#E0795C', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
                   <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>Google reviews<br />in 4 months</div>
                 </div>
               </div>
@@ -275,7 +309,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
               </div>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* SOCIAL PROOF */}
@@ -293,7 +327,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
             ['"No pressure, no jargon. They fixed the missed-call thing first and it paid for itself in two weeks."', 'Carla M.', 'Plumbing, Texas'],
             ['"Finally know my numbers. The audit alone was worth more than what three \'marketing guys\' sold me."', 'Sam P.', 'Plumbing & HVAC, Florida'],
           ].map(([quote, name, loc]) => (
-            <div key={name} style={{ background: '#fff', border: '1px solid #E2E5EA', borderRadius: 6, padding: 24 }}>
+            <div key={name} className="lf-card" style={{ background: '#fff', border: '1px solid #E2E5EA', borderRadius: 6, padding: 24 }}>
               <p style={{ fontSize: 15.5, color: '#2E3641', margin: '0 0 16px', lineHeight: 1.6 }}>{quote}</p>
               <div style={{ fontWeight: 700, fontSize: 14 }}>{name} <span style={{ color: '#9AA3AE', fontWeight: 500 }}>· {loc}</span></div>
             </div>
