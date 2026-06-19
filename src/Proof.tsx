@@ -77,9 +77,9 @@ export function BeforeAfter() {
       <Reveal style={{ background: 'radial-gradient(120% 120% at 0% 0%, #21365C 0%, #16243F 55%, #0E1A30 100%)', border: '1px solid #2B3C5C', borderRadius: 10, padding: 40, color: '#fff' }}>
         <div ref={ref} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 36, alignItems: 'center' }}>
           <div>
-            <p style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: '#E0795C', margin: '0 0 10px' }}>Same ad budget · 90 days later</p>
-            <h3 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 30, lineHeight: 1.08, margin: '0 0 12px' }}>Monthly revenue, before and after we plugged the leaks.</h3>
-            <p style={{ fontSize: 15.5, color: 'rgba(255,255,255,.72)', margin: '0 0 16px' }}>No new spend. We just stopped the jobs from dripping out the bottom.</p>
+            <p style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: '#E0795C', margin: '0 0 10px' }}>Modeled · same ad budget · 90 days</p>
+            <h3 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 30, lineHeight: 1.08, margin: '0 0 12px' }}>What plugging the leaks does to monthly revenue.</h3>
+            <p style={{ fontSize: 15.5, color: 'rgba(255,255,255,.72)', margin: '0 0 16px' }}>A typical shop, modeled from the leaks above — no new spend, just fewer jobs dripping out the bottom.</p>
             <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, background: 'rgba(224,121,92,.16)', border: '1px solid rgba(224,121,92,.4)', borderRadius: 8, padding: '10px 16px' }}>
               <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 22, color: '#E0795C' }}>+{fmtMoney(delta)}/mo</span>
               <span style={{ fontSize: 13.5, color: 'rgba(255,255,255,.7)' }}>(+{pct}%)</span>

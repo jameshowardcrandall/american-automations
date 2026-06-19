@@ -76,22 +76,22 @@ export const STEPS: Step[] = [
   { num: '03', title: 'We automate the rest', body: "Follow-ups, review requests, and reactivating old leads you'd written off — all running in the background." },
 ];
 
-export interface Testimonial { quote: string; name: string; loc: string }
-export const TESTIMONIALS: Testimonial[] = [
-  { quote: '"Found $4k/month walking out the door on the first call. We\'d been blaming our ad budget the whole time."', name: 'Dave T.', loc: 'HVAC, Ohio' },
-  { quote: '"No pressure, no jargon. They fixed the missed-call thing first and it paid for itself in two weeks."', name: 'Carla M.', loc: 'Cleaning service, Texas' },
-  { quote: '"Finally know my numbers. The audit alone was worth more than what three \'marketing guys\' sold me."', name: 'Sam P.', loc: 'Electrical & Solar, Florida' },
+/* Honest "what to expect" timeline — used in place of fabricated testimonials
+   while pre-roster. Swap to a real Testimonial[] once you have client quotes. */
+export interface Expectation { phase: string; title: string; body: string }
+export const EXPECTATIONS: Expectation[] = [
+  { phase: 'Week 1', title: 'Stop the #1 leak', body: 'We turn on instant missed-call text-back and 60-second lead response. The biggest drip stops first — usually before your first invoice.' },
+  { phase: 'Day 30', title: 'Automations earning', body: "Quote follow-ups and review requests are running. Old leads you'd written off start booking again — on autopilot, in the background." },
+  { phase: 'Day 90', title: 'Clear ROI, or you walk', body: 'One dashboard, a recovered-revenue number you can see, and a 30-day cancel-anytime guarantee. No lock-in, ever.' },
 ];
 
+/* Projection (not a specific client) — modeled from the average leaks above.
+   Honest while pre-roster; swap in a real case study when you have one. */
 export const CASE_STUDY = {
   headline: 11400,
   jobsBooked: 147,
   reviewsFrom: 14,
   reviewsTo: 92,
-  quote: '"We weren\'t missing leads — we were missing the follow-up. The audit showed us exactly where, down to the dollar."',
-  name: 'Mike R.',
-  role: 'Owner · Multi-trade service business',
-  initials: 'MR',
   beforeRevenue: 38000,  // monthly, before
   afterRevenue: 49400,   // monthly, after
 };

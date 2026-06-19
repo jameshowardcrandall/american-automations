@@ -1,6 +1,6 @@
 import { useMemo, useState, type CSSProperties } from 'react';
 import { Reveal, CountUp, LiveLeak, RotatingWord, Marquee } from './motion';
-import { brand, TRADES, MARQUEE, STEPS, TESTIMONIALS, CASE_STUDY, INDUSTRIES, monthlyLeak, fmtMoney } from './config';
+import { brand, TRADES, MARQUEE, STEPS, EXPECTATIONS, CASE_STUDY, INDUSTRIES, monthlyLeak, fmtMoney } from './config';
 import { useFunnel } from './state';
 import LeakCalculator from './LeakCalculator';
 import LeaksDiagram from './LeaksDiagram';
@@ -302,33 +302,30 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
         </div>
       </section>
 
-      {/* RESULTS / CASE STUDY */}
+      {/* RESULTS / PROJECTION */}
       <section id="proof" style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px 8px' }}>
         <Reveal style={{ background: '#16243F', borderRadius: 6, padding: 48, color: '#fff', position: 'relative', overflow: 'hidden' }}>
-          <span style={{ position: 'absolute', top: 20, right: 22, fontSize: 11.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: '#E0795C', border: '1px solid rgba(224,121,92,.4)', padding: '5px 10px', borderRadius: 6 }}>Client result</span>
+          <span style={{ position: 'absolute', top: 20, right: 22, fontSize: 11.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: '#E0795C', border: '1px solid rgba(224,121,92,.4)', padding: '5px 10px', borderRadius: 6 }}>Modeled projection</span>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 40, alignItems: 'center' }}>
             <div>
-              <CountUp value={CASE_STUDY.headline} prefix="$" duration={1700} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 64, lineHeight: 1, color: '#fff', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
-              <div style={{ fontSize: 16, color: 'rgba(255,255,255,.7)', marginTop: 8 }}>recovered in the first 90 days — with zero new ad spend.</div>
+              <CountUp value={CASE_STUDY.headline} prefix="≈$" duration={1700} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 64, lineHeight: 1, color: '#fff', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
+              <div style={{ fontSize: 16, color: 'rgba(255,255,255,.7)', marginTop: 8 }}>is what our model says a typical shop recovers in 90 days — with zero new ad spend.</div>
               <div style={{ display: 'flex', gap: 28, marginTop: 28, flexWrap: 'wrap' }}>
                 <div>
                   <CountUp value={CASE_STUDY.jobsBooked} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 26, color: '#E0795C', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
-                  <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>jobs booked from<br />leads they'd written off</div>
+                  <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>jobs/yr typically won back<br />from leads written off</div>
                 </div>
                 <div>
                   <CountUp value={CASE_STUDY.reviewsTo} prefix={`${CASE_STUDY.reviewsFrom} → `} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 26, color: '#E0795C', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
-                  <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>Google reviews<br />in 4 months</div>
+                  <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>reviews in 4 months<br />with auto-requests on</div>
                 </div>
               </div>
             </div>
             <div style={{ borderLeft: '2px solid rgba(224,121,92,.5)', paddingLeft: 26 }}>
-              <p style={{ fontSize: 20, lineHeight: 1.5, fontWeight: 500, margin: '0 0 18px', color: 'rgba(255,255,255,.95)', textWrap: 'pretty' }}>{CASE_STUDY.quote}</p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                <div style={{ width: 42, height: 42, borderRadius: '50%', background: 'linear-gradient(135deg,#E0795C,#16243F)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: SAIRA, fontWeight: 700, color: '#fff' }}>{CASE_STUDY.initials}</div>
-                <div>
-                  <div style={{ fontWeight: 700, fontSize: 15 }}>{CASE_STUDY.name}</div>
-                  <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.6)' }}>{CASE_STUDY.role}</div>
-                </div>
+              <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: '#E0795C', marginBottom: 10 }}>Where the number comes from</div>
+              <p style={{ fontSize: 17, lineHeight: 1.55, fontWeight: 500, margin: '0 0 18px', color: 'rgba(255,255,255,.9)', textWrap: 'pretty' }}>We apply the same leak math from the calculator to an average shop's call volume, lead flow, and ticket size. On your audit, we swap the assumptions for <strong style={{ color: '#fff' }}>your</strong> real numbers — so you leave knowing it to the dollar.</p>
+              <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,.85)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 6, padding: '8px 13px' }}>
+                <Check size={14} sw={2.6} color="#E0795C" />Veteran-owned · you only pay for booked jobs
               </div>
             </div>
           </div>
@@ -338,23 +335,25 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
       {/* BEFORE / AFTER CHART */}
       <BeforeAfter />
 
-      {/* SOCIAL PROOF */}
+      {/* WHAT TO EXPECT — first 90 days */}
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '48px 24px 24px' }}>
-        <Reveal style={{ textAlign: 'center', marginBottom: 32, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <span style={{ color: '#F5A623', fontSize: 18, letterSpacing: '2px' }}>★★★★★</span>
-            <span style={{ fontWeight: 700, fontSize: 15 }}>4.9</span>
-            <span style={{ color: 'var(--muted)', fontSize: 14.5 }}>from service-business owners nationwide</span>
-          </div>
+        <Reveal style={{ textAlign: 'center', marginBottom: 36 }}>
+          <p style={{ fontFamily: SAIRA, fontWeight: 600, fontSize: 14, textTransform: 'uppercase', color: '#9C3B2C', margin: '0 0 8px', letterSpacing: '.16em' }}>What to expect</p>
+          <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 32, margin: 0, color: 'var(--ink)' }}>Your first 90 days, realistically.</h2>
         </Reveal>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>
-          {TESTIMONIALS.map((t) => (
-            <div key={t.name} className="lf-card" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 6, padding: 24 }}>
-              <p style={{ fontSize: 15.5, color: '#2E3641', margin: '0 0 16px', lineHeight: 1.6 }}>{t.quote}</p>
-              <div style={{ fontWeight: 700, fontSize: 14, color: 'var(--ink)' }}>{t.name} <span style={{ color: 'var(--muted)', fontWeight: 500 }}>· {t.loc}</span></div>
+          {EXPECTATIONS.map((e, i) => (
+            <div key={e.phase} className="lf-card" style={{ position: 'relative', background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 6, padding: 24, overflow: 'hidden' }}>
+              <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, width: `${((i + 1) / EXPECTATIONS.length) * 100}%`, height: 4, background: '#9C3B2C' }} />
+              <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: '#9C3B2C', marginTop: 6 }}>{e.phase}</div>
+              <h3 style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 19, margin: '4px 0 8px', color: 'var(--ink)' }}>{e.title}</h3>
+              <p className="lf-body" style={{ fontSize: 15, color: 'var(--muted)', margin: 0, lineHeight: 1.55 }}>{e.body}</p>
             </div>
           ))}
         </div>
+        <Reveal style={{ textAlign: 'center', marginTop: 22 }}>
+          <span style={{ fontSize: 13, color: 'var(--muted)' }}>New and building our client roster — so we lead with the math, not borrowed hype. The audit is where you see your real numbers.</span>
+        </Reveal>
       </section>
 
       {/* FAQ */}
