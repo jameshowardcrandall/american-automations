@@ -1,0 +1,14 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+#root { min-height: 100vh; }
+::selection { background: #16243F; color: #fff; }
+
+@keyframes lfpulse { 0%, 100% { opacity: .55; transform: scale(1); } 50% { opacity: 1; transform: scale(1.08); } }
+@keyframes lfrise { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Hover states — the design prototype used a non-standard style-hover attribute;
+   recreate those interactions with real CSS so the page behaves identically. */
+.lf-nav-link { color: #6B7480; transition: color .15s ease; }
+.lf-nav-link:hover { color: #16243F; }
+.lf-cta-nav:hover { background: #9C3B2C !important; }
+.lf-cta-red:hover { background: #7E2F22 !important; }
