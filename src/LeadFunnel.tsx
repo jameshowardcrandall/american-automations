@@ -1,4 +1,4 @@
-import { useMemo, useState, type CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import { Reveal, CountUp, LiveLeak, RotatingWord, Marquee } from './motion';
 import { brand, TRADES, MARQUEE, STEPS, EXPECTATIONS, CASE_STUDY, INDUSTRIES, monthlyLeak, fmtMoney } from './config';
 import { useFunnel } from './state';
@@ -6,6 +6,7 @@ import LeakCalculator from './LeakCalculator';
 import LeaksDiagram from './LeaksDiagram';
 import Faq from './Faq';
 import { LogoWall, BeforeAfter } from './Proof';
+import CalEmbed from './CalEmbed';
 
 const SAIRA = "'Saira Semi Condensed',sans-serif";
 
@@ -76,10 +77,7 @@ function IndustryPicker() {
 
 export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showLeaks = true }: LeadFunnelProps) {
   const { industry } = useFunnel();
-  const [selectedDay, setSelectedDay] = useState(23);
-  const [selectedTime, setSelectedTime] = useState('10:30 AM');
   const [videoPlaying, setVideoPlaying] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
 
   const isCompare = heroMode === 'compare';
   const showA = heroMode !== 'hookB';
@@ -101,31 +99,6 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
   const heroAmount = industry.key === 'all'
     ? '$3,000+'
     : fmtMoney(Math.round(monthlyLeak(industry).total / 100) * 100) + '+';
-
-  // ----- calendar (June 2026; Jun 1 = Monday) -----
-  const WEEKDAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-  const weekdayName = (d: number) => WEEKDAYS[(1 + (d - 1)) % 7];
-  const TIMES = ['9:00 AM', '9:30 AM', '10:30 AM', '11:00 AM', '1:00 PM', '2:30 PM'];
-  function dayStyle(disabled: boolean, selected: boolean): CSSProperties {
-    const base: CSSProperties = { display: 'flex', alignItems: 'center', justifyContent: 'center', aspectRatio: '1', borderRadius: '9px', fontSize: '14.5px', fontWeight: 600, fontFamily: "'IBM Plex Sans',sans-serif" };
-    if (selected) return { ...base, background: '#16243F', color: '#fff', border: '1px solid #16243F', cursor: 'pointer', boxShadow: '0 4px 10px -3px rgba(22,36,63,.6)' };
-    if (disabled) return { ...base, color: '#C2C8D1', border: '1px solid transparent', cursor: 'default' };
-    return { ...base, color: '#2E3641', border: '1px solid #E2E5EA', cursor: 'pointer', background: '#fff' };
-  }
-  function timeStyle(selected: boolean): CSSProperties {
-    const base: CSSProperties = { textAlign: 'center', padding: '11px 6px', borderRadius: '9px', fontSize: '14px', fontWeight: 600, cursor: 'pointer', fontFamily: "'IBM Plex Sans',sans-serif" };
-    if (selected) return { ...base, background: '#EEF1F5', border: '1px solid #16243F', color: '#0E1A30' };
-    return { ...base, background: '#fff', border: '1px solid #E2E5EA', color: '#2E3641' };
-  }
-  const days = useMemo(() => {
-    const out: { key: string; empty: boolean; day?: number; disabled?: boolean; selected?: boolean }[] = [{ key: 'e0', empty: true }];
-    for (let d = 1; d <= 30; d++) {
-      const wi = (1 + (d - 1)) % 7;
-      out.push({ key: 'd' + d, empty: false, day: d, disabled: wi === 0 || wi === 6 || d < 19, selected: d === selectedDay });
-    }
-    return out;
-  }, [selectedDay]);
-  const dateStr = `${weekdayName(selectedDay)}, Jun ${selectedDay}`;
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans',-apple-system,sans-serif", background: 'var(--bg)', color: 'var(--ink)', lineHeight: 1.55, WebkitFontSmoothing: 'antialiased', minHeight: '100vh', fontSize: 16 }}>
@@ -389,48 +362,9 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
             </div>
           </div>
 
-          {/* right: calendar (kept on a light surface for legibility) */}
-          <div style={{ padding: '34px 32px', background: '#fff' }}>
-            {!confirmed ? (
-              <div>
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-                  <span style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 16, color: '#16243F' }}>June 2026</span>
-                  <div style={{ display: 'flex', gap: 6, color: '#9AA3AE' }}>
-                    <span style={{ width: 30, height: 30, border: '1px solid #E2E5EA', borderRadius: 6, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>‹</span>
-                    <span style={{ width: 30, height: 30, border: '1px solid #E2E5EA', borderRadius: 6, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>›</span>
-                  </div>
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 5, marginBottom: 6 }}>
-                  {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map((d) => (
-                    <div key={d} style={{ textAlign: 'center', fontSize: 11.5, fontWeight: 600, color: '#9AA3AE' }}>{d}</div>
-                  ))}
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7,1fr)', gap: 5 }}>
-                  {days.map((d) => d.empty ? <div key={d.key} /> : (
-                    <div key={d.key} onClick={d.disabled ? undefined : () => setSelectedDay(d.day!)} style={dayStyle(!!d.disabled, !!d.selected)}>{d.day}</div>
-                  ))}
-                </div>
-                <div style={{ marginTop: 18, fontSize: 13, color: '#9AA3AE', display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#16243F" strokeWidth="2" /><path d="M12 7v5l3 2" stroke="#16243F" strokeWidth="2" strokeLinecap="round" /></svg>Times shown in your local time
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3,1fr)', gap: 7, marginTop: 14 }}>
-                  {TIMES.map((label) => (
-                    <div key={label} onClick={() => setSelectedTime(label)} style={timeStyle(label === selectedTime)}>{label}</div>
-                  ))}
-                </div>
-                <button onClick={() => setConfirmed(true)} className="lf-cta-red" style={{ width: '100%', marginTop: 18, background: '#9C3B2C', color: '#fff', fontFamily: SAIRA, fontWeight: 700, fontSize: 16, padding: 15, borderRadius: 6, border: 'none', cursor: 'pointer', letterSpacing: '.04em', textTransform: 'uppercase', boxShadow: '0 8px 22px -6px rgba(156,59,44,.5)' }}>Confirm — {dateStr} · {selectedTime}</button>
-                <p style={{ textAlign: 'center', fontSize: 12.5, color: '#9AA3AE', margin: '12px 0 0' }}>Scheduler placeholder — connect Calendly / Cal.com here.</p>
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 340, animation: 'lfrise .4s ease' }}>
-                <div style={{ width: 64, height: 64, borderRadius: '50%', background: '#EEF1F5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 20 }}>
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><path d="M20 6 9 17l-5-5" stroke="#16243F" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </div>
-                <h3 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 23, margin: '0 0 8px', color: '#16243F' }}>You're booked.</h3>
-                <p style={{ fontSize: 15.5, color: '#6B7480', margin: '0 0 4px' }}>{dateStr} at {selectedTime} — check your email for the calendar invite.</p>
-                <p style={{ fontSize: 13.5, color: '#9AA3AE', margin: '14px 0 0' }}>(Demo confirmation — wire up your real scheduler.)</p>
-              </div>
-            )}
+          {/* right: live Cal.com scheduler (kept on a light surface for legibility) */}
+          <div style={{ padding: 14, background: '#fff' }}>
+            <CalEmbed height={680} />
           </div>
         </div>
       </section>
