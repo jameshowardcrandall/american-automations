@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Reveal } from './motion';
-import { monthlyLeak, fmtMoney } from './config';
+import { monthlyLeak, fmtMoney, submitLead } from './config';
 import { useFunnel } from './state';
 
 const SAIRA = "'Saira Semi Condensed',sans-serif";
@@ -36,7 +36,10 @@ export default function LeakCalculator() {
   const [deadQuotes, setDeadQuotes] = useState(industry.deadQuotesPerWeek);
   const [sent, setSent] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [form, setForm] = useState({ name: '', email: '', business: '', phone: '' });
   const formRef = useRef<HTMLDivElement>(null);
+  const setField = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement>) => setForm((f) => ({ ...f, [k]: e.target.value }));
 
   // When the visitor picks a different industry, re-seat the sliders on its benchmarks.
   useEffect(() => {
@@ -54,10 +57,26 @@ export default function LeakCalculator() {
     setTimeout(() => formRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 60);
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: POST to your CRM / webhook (HighLevel, Zapier, etc.). Payload below.
-    // { name, email, business, phone, industry: industry.key, ticket, missed, deadQuotes, monthly: total }
+    if (submitting) return;
+    setSubmitting(true);
+    await submitLead({
+      name: form.name,
+      email: form.email,
+      phone: form.phone,
+      business: form.business,
+      industry: industry.label,
+      industryKey: industry.key,
+      avgTicket: ticket,
+      missedCallsPerWeek: missed,
+      deadQuotesPerWeek: deadQuotes,
+      monthlyLeak: Math.round(total),
+      yearlyLeak: Math.round(yearly),
+      source: 'lead-leak-calculator',
+      pageUrl: typeof window !== 'undefined' ? window.location.href : '',
+    });
+    setSubmitting(false);
     setSent(true);
   };
 
@@ -111,14 +130,14 @@ export default function LeakCalculator() {
             <div ref={formRef} style={{ marginTop: 18, animation: 'lfrise .3s ease' }}>
               <div style={{ fontSize: 13.5, color: 'rgba(255,255,255,.7)', marginBottom: 12 }}>Where should we send your itemized leak report + the exact recoverable number?</div>
               <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
-                <input style={field} placeholder="Your name" required autoComplete="name" />
-                <input style={field} type="email" placeholder="Email" required autoComplete="email" />
+                <input style={field} placeholder="Your name" required autoComplete="name" value={form.name} onChange={setField('name')} />
+                <input style={field} type="email" placeholder="Email" required autoComplete="email" value={form.email} onChange={setField('email')} />
                 <div style={{ display: 'flex', gap: 9, flexWrap: 'wrap' }}>
-                  <input style={{ ...field, flex: 1, minWidth: 120 }} placeholder="Business name" required />
-                  <input style={{ ...field, flex: 1, minWidth: 120 }} type="tel" placeholder="Phone (optional)" autoComplete="tel" />
+                  <input style={{ ...field, flex: 1, minWidth: 120 }} placeholder="Business name" required value={form.business} onChange={setField('business')} />
+                  <input style={{ ...field, flex: 1, minWidth: 120 }} type="tel" placeholder="Phone (optional)" autoComplete="tel" value={form.phone} onChange={setField('phone')} />
                 </div>
-                <button type="submit" className="lf-cta-red" style={{ marginTop: 4, background: '#9C3B2C', color: '#fff', fontFamily: SAIRA, fontWeight: 700, fontSize: 15, padding: '13px', borderRadius: 6, border: 'none', cursor: 'pointer', letterSpacing: '.04em', textTransform: 'uppercase', boxShadow: '0 8px 22px -6px rgba(156,59,44,.5)' }}>
-                  Send my leak report →
+                <button type="submit" disabled={submitting} className="lf-cta-red" style={{ marginTop: 4, background: '#9C3B2C', color: '#fff', fontFamily: SAIRA, fontWeight: 700, fontSize: 15, padding: '13px', borderRadius: 6, border: 'none', cursor: submitting ? 'default' : 'pointer', opacity: submitting ? 0.7 : 1, letterSpacing: '.04em', textTransform: 'uppercase', boxShadow: '0 8px 22px -6px rgba(156,59,44,.5)' }}>
+                  {submitting ? 'Sending…' : 'Send my leak report →'}
                 </button>
                 <div style={{ fontSize: 12, color: 'rgba(255,255,255,.45)', textAlign: 'center' }}>No spam. Veteran-owned. Unsubscribe anytime.</div>
               </form>

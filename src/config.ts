@@ -19,6 +19,29 @@ export const brand = {
   tagline: 'Stop losing jobs you already paid to get.',
 };
 
+/* ---- GoHighLevel lead routing ----
+   Paste your GHL *Inbound Webhook* URL below to send calculator leads into GHL.
+   Create it in GHL: Automation → Workflows → + New Workflow → add trigger
+   "Inbound Webhook" → Save → copy the webhook URL it generates. Then map the
+   fields (name, email, phone, business, etc.) onto a Create/Update Contact step.
+   Leave '' and the form still works — it just shows success without sending. */
+export const GHL_WEBHOOK_URL = '';
+export const GHL_LOCATION_ID = 'Ox72X3YUgSkxaaC937Jv';
+
+/** POST a lead to the GHL inbound webhook. Uses text/plain to dodge the CORS
+ *  preflight (GHL parses the JSON body either way); never throws to the caller. */
+export async function submitLead(payload: Record<string, unknown>): Promise<boolean> {
+  if (!GHL_WEBHOOK_URL) return true; // not wired yet — don't block the UX
+  const body = JSON.stringify({ ...payload, locationId: GHL_LOCATION_ID });
+  try {
+    await fetch(GHL_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body });
+    return true;
+  } catch {
+    try { await fetch(GHL_WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body }); } catch { /* ignore */ }
+    return true;
+  }
+}
+
 /* ---- Leak math (shared by the calculator, hero ticker, and sticky bar) ---- */
 export const WEEKS_PER_MONTH = 4.33;
 export const MISSED_CALL_BOOK_RATE = 0.35; // a missed call that would've booked
