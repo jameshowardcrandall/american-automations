@@ -13,6 +13,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       Flip this to A/B test or preview. The design tool defaulted to 'compare';
       a live visitor should only ever see one hook, so the shipped default is 'hookB'.
     */}
-    <LeadFunnel heroMode="hookB" showVideo showLeaks />
+    <LeadFunnel heroMode="hookB" showVideo={false} showLeaks />
   </React.StrictMode>
 );
