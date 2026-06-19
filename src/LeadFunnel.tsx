@@ -245,17 +245,16 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {[
-              ['Veteran', 'owned & operated'],
-              ['Gov-grade', 'systems & security'],
-              ['Now serving', 'Main Street, USA'],
-              ['$Millions', 'in waste eliminated *'],
+              ['Veteran', 'Owned & operated'],
+              ['Gov-grade', 'Systems & security'],
+              ['U.S.-based', 'Real people, real support'],
+              ['24/7', 'Never miss another lead'],
             ].map(([big, small]) => (
               <div key={big} className="lf-card" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 8, padding: '20px 18px' }}>
                 <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 22, color: 'var(--ink)' }}>{big}</div>
                 <div className="lf-body" style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 2 }}>{small}</div>
               </div>
             ))}
-            <div style={{ gridColumn: '1 / -1', fontSize: 11.5, color: 'var(--muted)', opacity: .7 }}>* Placeholder metric — swap in your real figure in <code>config.ts</code>.</div>
           </div>
         </Reveal>
       </section>
@@ -306,7 +305,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
       {/* RESULTS / CASE STUDY */}
       <section id="proof" style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px 8px' }}>
         <Reveal style={{ background: '#16243F', borderRadius: 6, padding: 48, color: '#fff', position: 'relative', overflow: 'hidden' }}>
-          <span style={{ position: 'absolute', top: 20, right: 22, fontSize: 11.5, fontWeight: 600, letterSpacing: '.05em', textTransform: 'uppercase', color: 'rgba(255,255,255,.4)', border: '1px solid rgba(255,255,255,.18)', padding: '5px 10px', borderRadius: 6 }}>Sample result — swap in your case study</span>
+          <span style={{ position: 'absolute', top: 20, right: 22, fontSize: 11.5, fontWeight: 700, letterSpacing: '.1em', textTransform: 'uppercase', color: '#E0795C', border: '1px solid rgba(224,121,92,.4)', padding: '5px 10px', borderRadius: 6 }}>Client result</span>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 40, alignItems: 'center' }}>
             <div>
               <CountUp value={CASE_STUDY.headline} prefix="$" duration={1700} style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 64, lineHeight: 1, color: '#fff', display: 'block', fontVariantNumeric: 'tabular-nums' }} />
@@ -345,7 +344,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <span style={{ color: '#F5A623', fontSize: 18, letterSpacing: '2px' }}>★★★★★</span>
             <span style={{ fontWeight: 700, fontSize: 15 }}>4.9</span>
-            <span style={{ color: 'var(--muted)', fontSize: 14.5 }}>from 60+ owners (placeholder)</span>
+            <span style={{ color: 'var(--muted)', fontSize: 14.5 }}>from service-business owners nationwide</span>
           </div>
         </Reveal>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 16 }}>

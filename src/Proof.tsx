@@ -1,23 +1,45 @@
-import { CASE_STUDY, LOGOS, fmtMoney } from './config';
+import { CASE_STUDY, fmtMoney } from './config';
 import { Reveal, useInView } from './motion';
 
 const SAIRA = "'Saira Semi Condensed',sans-serif";
 
-/** "As seen in" / trusted-by strip of placeholder wordmark logos. */
+/* Recognizable platform marks — we automate ON TOP of the tools shops already
+   run, so this is an honest "works with" strip (no fabricated client logos). */
+const INTEGRATIONS: { name: string; mark: React.ReactNode }[] = [
+  { name: 'Twilio', mark: (
+    <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#F22F46" /><g fill="#fff"><circle cx="11" cy="11" r="3" /><circle cx="21" cy="11" r="3" /><circle cx="11" cy="21" r="3" /><circle cx="21" cy="21" r="3" /></g></svg>
+  ) },
+  { name: 'HighLevel', mark: (
+    <svg width="22" height="22" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#155EEF" /><text x="16" y="21" textAnchor="middle" fontFamily="Saira Semi Condensed,sans-serif" fontWeight="800" fontSize="13" fill="#fff">HL</text></svg>
+  ) },
+  { name: 'Calendly', mark: (
+    <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#006BFF" /><circle cx="16" cy="16" r="7" fill="none" stroke="#fff" strokeWidth="3" /></svg>
+  ) },
+  { name: 'QuickBooks', mark: (
+    <svg width="22" height="22" viewBox="0 0 32 32"><circle cx="16" cy="16" r="16" fill="#2CA01C" /><text x="16" y="21" textAnchor="middle" fontFamily="Saira Semi Condensed,sans-serif" fontWeight="800" fontSize="13" fill="#fff">qb</text></svg>
+  ) },
+  { name: 'Zapier', mark: (
+    <svg width="22" height="22" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#FF4F00" /><g stroke="#fff" strokeWidth="2.6" strokeLinecap="round"><path d="M16 8v16M8 16h16M10.3 10.3l11.4 11.4M21.7 10.3 10.3 21.7" /></g></svg>
+  ) },
+  { name: 'Google Business', mark: (
+    <svg width="22" height="22" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#fff" stroke="#E2E5EA" /><path d="M16 14.5v3h4.2c-.2 1-1.4 3-4.2 3a4.5 4.5 0 1 1 0-9c1.3 0 2.2.5 2.7 1l2-2A7.5 7.5 0 1 0 23.5 16c0-.5 0-.9-.1-1.5H16Z" fill="#4285F4" /></svg>
+  ) },
+];
+
+/** "Works with" integrations strip — recognizable platforms, no fake clients. */
 export function LogoWall() {
   return (
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '40px 24px 8px' }}>
       <Reveal>
-        <p style={{ textAlign: 'center', fontFamily: SAIRA, fontWeight: 600, fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--muted)', margin: '0 0 18px' }}>Trusted by operators across the trades</p>
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '20px 36px', opacity: .85 }}>
-          {LOGOS.map((name) => (
-            <span key={name} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, color: 'var(--muted)', fontFamily: SAIRA, fontWeight: 800, fontSize: 19, letterSpacing: '.02em', textTransform: 'uppercase', filter: 'grayscale(1)' }}>
-              <svg width="20" height="20" viewBox="0 0 100 100" fill="none"><path d="M18 14 L82 14 L82 54 L50 90 L18 54 Z" fill="currentColor" opacity=".55" /></svg>
-              {name}
+        <p style={{ textAlign: 'center', fontFamily: SAIRA, fontWeight: 600, fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--muted)', margin: '0 0 18px' }}>Works with the tools you already run</p>
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: '16px 30px' }}>
+          {INTEGRATIONS.map((it) => (
+            <span key={it.name} style={{ display: 'inline-flex', alignItems: 'center', gap: 9, color: 'var(--ink)', fontFamily: SAIRA, fontWeight: 700, fontSize: 18, letterSpacing: '.01em' }}>
+              {it.mark}{it.name}
             </span>
           ))}
         </div>
-        <p style={{ textAlign: 'center', fontSize: 12, color: 'var(--muted)', opacity: .7, margin: '16px 0 0' }}>Placeholder logos — swap in real client or press marks in <code>config.ts</code>.</p>
+        <p style={{ textAlign: 'center', fontSize: 13, color: 'var(--muted)', margin: '16px 0 0' }}>No rip-and-replace — we layer automation on top of your existing stack.</p>
       </Reveal>
     </section>
   );

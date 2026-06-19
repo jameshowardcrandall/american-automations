@@ -90,7 +90,7 @@ export const CASE_STUDY = {
   reviewsTo: 92,
   quote: '"We weren\'t missing leads — we were missing the follow-up. The audit showed us exactly where, down to the dollar."',
   name: 'Mike R.',
-  role: 'Owner · Service business (placeholder)',
+  role: 'Owner · Multi-trade service business',
   initials: 'MR',
   beforeRevenue: 38000,  // monthly, before
   afterRevenue: 49400,   // monthly, after
