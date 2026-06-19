@@ -17,6 +17,7 @@ html { scroll-behavior: smooth; }
 /* Live "leak" dot. */
 @keyframes lfleak { 0% { transform: scale(.6); opacity: .9; } 100% { transform: scale(2.4); opacity: 0; } }
 @keyframes lfblink { 0%, 100% { opacity: 1; } 50% { opacity: .25; } }
+@keyframes lfmarquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
 /* Hover states — the design prototype used a non-standard style-hover attribute;
    recreate those interactions with real CSS so the page behaves identically. */
@@ -39,5 +40,6 @@ html { scroll-behavior: smooth; }
   html { scroll-behavior: auto; }
   .lf-reveal { opacity: 1; transform: none; transition: none; }
   .lf-cta-red { animation: none; }
+  [style*="lfmarquee"] { animation: none !important; }
   .lf-card:hover, .lf-cta-red:hover, .lf-cta-nav:hover { transform: none; }
 }

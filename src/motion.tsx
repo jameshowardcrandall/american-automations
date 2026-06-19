@@ -1,5 +1,46 @@
 import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 
+/**
+ * Cycles through `words` in place with a quick fade/slide. Keeps the funnel
+ * feeling tailored to whoever's reading — plumbers, roofers, electricians…
+ */
+export function RotatingWord({ words, interval = 2200, style }: { words: string[]; interval?: number; style?: CSSProperties }) {
+  const [i, setI] = useState(0);
+  const [show, setShow] = useState(true);
+  useEffect(() => {
+    const reduce = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    const id = setInterval(() => {
+      setShow(false);
+      setTimeout(() => { setI((p) => (p + 1) % words.length); setShow(true); }, 240);
+    }, interval);
+    return () => clearInterval(id);
+  }, [words.length, interval]);
+  return (
+    <span style={{ display: 'inline-block', transition: 'opacity .24s ease, transform .24s ease', opacity: show ? 1 : 0, transform: show ? 'none' : 'translateY(6px)', ...style }}>
+      {words[i]}
+    </span>
+  );
+}
+
+/** Endless horizontal marquee of pills — duplicates children for a seamless loop. */
+export function Marquee({ items }: { items: string[] }) {
+  const row = (
+    <div style={{ display: 'flex', gap: 10, paddingRight: 10, flex: 'none' }}>
+      {items.map((t, k) => (
+        <span key={k} style={{ flex: 'none', fontFamily: "'Saira Semi Condensed',sans-serif", fontWeight: 700, fontSize: 13, letterSpacing: '.06em', textTransform: 'uppercase', color: '#2E3641', background: '#fff', border: '1px solid #E2E5EA', padding: '8px 15px', borderRadius: 999, whiteSpace: 'nowrap' }}>{t}</span>
+      ))}
+    </div>
+  );
+  return (
+    <div aria-hidden style={{ position: 'relative', overflow: 'hidden', WebkitMaskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)', maskImage: 'linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent)' }}>
+      <div style={{ display: 'flex', width: 'max-content', animation: 'lfmarquee 32s linear infinite' }}>
+        {row}{row}
+      </div>
+    </div>
+  );
+}
+
 /** Returns a ref + whether it has scrolled into view (fires once). */
 export function useInView<T extends HTMLElement>(rootMargin = '-12% 0px') {
   const ref = useRef<T>(null);
