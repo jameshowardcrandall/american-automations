@@ -25,7 +25,7 @@ export const brand = {
    "Inbound Webhook" → Save → copy the webhook URL it generates. Then map the
    fields (name, email, phone, business, etc.) onto a Create/Update Contact step.
    Leave '' and the form still works — it just shows success without sending. */
-export const GHL_WEBHOOK_URL = '';
+export const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/Ox72X3YUgSkxaaC937Jv/webhook-trigger/3f41f2d6-0427-4f73-9490-161b48932931';
 export const GHL_LOCATION_ID = 'Ox72X3YUgSkxaaC937Jv';
 
 /** POST a lead to the GHL inbound webhook. Uses text/plain to dodge the CORS
