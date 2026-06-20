@@ -161,6 +161,15 @@ export const PRICING_TIERS: PricingTier[] = [
   { key: 'pro', name: 'Pro', price: 997, blurb: 'Everything, plus memberships and a strategist in your corner.',
     has: [true, true, true, true, true, true, true, true], sms: '4,000 texts/calls included' },
 ];
+/* Public scarcity hook. The *alternative* founding offer (performance pilot)
+   stays internal — only the simplest, cleanest offer goes on the site. */
+export const FOUNDING = {
+  spots: 3,
+  lead: 'Founding-client offer',
+  offer: 'First 3 shops get the $750 setup waived + first month free.',
+  cta: 'Claim your spot',
+};
+
 export const PRICING_META = {
   auditPrice: 'Free',
   setupPrice: 750,

@@ -6,6 +6,7 @@ import LeakCalculator from './LeakCalculator';
 import LeaksDiagram from './LeaksDiagram';
 import Faq from './Faq';
 import Pricing from './Pricing';
+import FoundingBanner from './FoundingBanner';
 import { LogoWall, BeforeAfter } from './Proof';
 import CalEmbed from './CalEmbed';
 
@@ -103,6 +104,9 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
 
   return (
     <div style={{ fontFamily: "'IBM Plex Sans',-apple-system,sans-serif", background: 'var(--bg)', color: 'var(--ink)', lineHeight: 1.55, WebkitFontSmoothing: 'antialiased', minHeight: '100vh', fontSize: 16 }}>
+
+      {/* FOUNDING-CLIENT BANNER */}
+      <FoundingBanner />
 
       {/* NAV */}
       <header style={{ position: 'sticky', top: 0, zIndex: 50, background: 'var(--header)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', borderBottom: '1px solid var(--border)' }}>
