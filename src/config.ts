@@ -44,13 +44,14 @@ export const VALUES: { title: string; body: string }[] = [
 export const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/Ox72X3YUgSkxaaC937Jv/webhook-trigger/2179a2b0-0383-4a58-aa87-a71c975064af';
 export const GHL_LOCATION_ID = 'Ox72X3YUgSkxaaC937Jv';
 
-/** POST a lead to the GHL inbound webhook. Uses text/plain to dodge the CORS
- *  preflight (GHL parses the JSON body either way); never throws to the caller. */
+/** POST a lead to the GHL inbound webhook as JSON. GHL's endpoint returns open
+ *  CORS, so application/json sends fine from the browser AND gets parsed into
+ *  mappable fields. Never throws to the caller. */
 export async function submitLead(payload: Record<string, unknown>): Promise<boolean> {
   if (!GHL_WEBHOOK_URL) return true; // not wired yet — don't block the UX
   const body = JSON.stringify({ ...payload, locationId: GHL_LOCATION_ID });
   try {
-    await fetch(GHL_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body });
+    await fetch(GHL_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body });
     return true;
   } catch {
     try { await fetch(GHL_WEBHOOK_URL, { method: 'POST', mode: 'no-cors', body }); } catch { /* ignore */ }
