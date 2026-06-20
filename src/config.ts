@@ -53,25 +53,45 @@ export function monthlyLeak({ avgTicket, missedPerWeek, deadQuotesPerWeek }: Lea
   const fromQuotes = deadQuotesPerWeek * WEEKS_PER_MONTH * DEAD_QUOTE_CLOSE_RATE * avgTicket;
   return { fromCalls, fromQuotes, total: fromCalls + fromQuotes };
 }
+
+/* ---- Traffic-that-doesn't-convert leak ----
+   A weak page wastes two things: paid demand (ad spend on visitors who bounce)
+   and organic demand (visits that never become a call). Both, conservatively. */
+export const ACHIEVABLE_CONV = 0.06; // a focused service landing page (visit → lead)
+export const DEFAULT_CONV = 0.02;    // a typical generic small-shop website
+export const WEB_LEAD_CLOSE_RATE = 0.4; // inbound web lead → booked job
+export const MAX_SPEND_WASTE = 0.7;  // cap on the share of ad spend treated as wasted
+
+export interface WebsiteInputs { avgTicket: number; monthlyVisits: number; currentConv: number; monthlyAdSpend: number }
+export function websiteLeak({ avgTicket, monthlyVisits, currentConv, monthlyAdSpend }: WebsiteInputs) {
+  const lostLeads = Math.max(0, monthlyVisits * (ACHIEVABLE_CONV - currentConv));
+  const lostRevenue = lostLeads * WEB_LEAD_CLOSE_RATE * avgTicket;
+  const wastePct = Math.min(MAX_SPEND_WASTE, Math.max(0, 1 - currentConv / ACHIEVABLE_CONV));
+  const wastedSpend = monthlyAdSpend * wastePct;
+  return { lostLeads, lostRevenue, wastedSpend, total: lostRevenue + wastedSpend };
+}
+
 export const fmtMoney = (n: number) => '$' + Math.round(n).toLocaleString('en-US');
 
 /* ---- Industries (drives industry-aware mode + calculator defaults) ---- */
 export interface Industry extends LeakInputs {
   key: string;
-  label: string;   // shown in the picker
-  trade: string;   // noun used in the headline ("Most ___ are losing…")
+  label: string;        // shown in the picker
+  trade: string;        // noun used in the headline ("Most ___ are losing…")
+  monthlyVisits: number;   // website/landing visits per month
+  monthlyAdSpend: number;  // paid ads / LSA spend per month
 }
 export const INDUSTRIES: Industry[] = [
-  { key: 'all',         label: 'All service businesses', trade: 'service businesses', avgTicket: 400, missedPerWeek: 6, deadQuotesPerWeek: 5 },
-  { key: 'plumbing',    label: 'Plumbing',     trade: 'plumbers',       avgTicket: 480, missedPerWeek: 8, deadQuotesPerWeek: 5 },
-  { key: 'hvac',        label: 'HVAC',         trade: 'HVAC shops',     avgTicket: 620, missedPerWeek: 7, deadQuotesPerWeek: 6 },
-  { key: 'roofing',     label: 'Roofing',      trade: 'roofers',        avgTicket: 1100, missedPerWeek: 5, deadQuotesPerWeek: 7 },
-  { key: 'electrical',  label: 'Electrical',   trade: 'electricians',   avgTicket: 520, missedPerWeek: 6, deadQuotesPerWeek: 5 },
-  { key: 'landscaping', label: 'Landscaping',  trade: 'landscapers',    avgTicket: 350, missedPerWeek: 7, deadQuotesPerWeek: 6 },
-  { key: 'cleaning',    label: 'Cleaning',     trade: 'cleaning crews', avgTicket: 180, missedPerWeek: 10, deadQuotesPerWeek: 6 },
-  { key: 'pest',        label: 'Pest Control', trade: 'pest pros',      avgTicket: 240, missedPerWeek: 8, deadQuotesPerWeek: 5 },
-  { key: 'garage',      label: 'Garage Doors', trade: 'garage-door pros', avgTicket: 540, missedPerWeek: 5, deadQuotesPerWeek: 4 },
-  { key: 'medspa',      label: 'Med Spa',      trade: 'med spas',       avgTicket: 320, missedPerWeek: 9, deadQuotesPerWeek: 7 },
+  { key: 'all',         label: 'All service businesses', trade: 'service businesses', avgTicket: 400, missedPerWeek: 6, deadQuotesPerWeek: 5, monthlyVisits: 400, monthlyAdSpend: 1000 },
+  { key: 'plumbing',    label: 'Plumbing',     trade: 'plumbers',       avgTicket: 480, missedPerWeek: 8, deadQuotesPerWeek: 5, monthlyVisits: 500, monthlyAdSpend: 1500 },
+  { key: 'hvac',        label: 'HVAC',         trade: 'HVAC shops',     avgTicket: 620, missedPerWeek: 7, deadQuotesPerWeek: 6, monthlyVisits: 600, monthlyAdSpend: 2200 },
+  { key: 'roofing',     label: 'Roofing',      trade: 'roofers',        avgTicket: 1100, missedPerWeek: 5, deadQuotesPerWeek: 7, monthlyVisits: 450, monthlyAdSpend: 2500 },
+  { key: 'electrical',  label: 'Electrical',   trade: 'electricians',   avgTicket: 520, missedPerWeek: 6, deadQuotesPerWeek: 5, monthlyVisits: 450, monthlyAdSpend: 1400 },
+  { key: 'landscaping', label: 'Landscaping',  trade: 'landscapers',    avgTicket: 350, missedPerWeek: 7, deadQuotesPerWeek: 6, monthlyVisits: 500, monthlyAdSpend: 1200 },
+  { key: 'cleaning',    label: 'Cleaning',     trade: 'cleaning crews', avgTicket: 180, missedPerWeek: 10, deadQuotesPerWeek: 6, monthlyVisits: 600, monthlyAdSpend: 900 },
+  { key: 'pest',        label: 'Pest Control', trade: 'pest pros',      avgTicket: 240, missedPerWeek: 8, deadQuotesPerWeek: 5, monthlyVisits: 500, monthlyAdSpend: 1100 },
+  { key: 'garage',      label: 'Garage Doors', trade: 'garage-door pros', avgTicket: 540, missedPerWeek: 5, deadQuotesPerWeek: 4, monthlyVisits: 350, monthlyAdSpend: 900 },
+  { key: 'medspa',      label: 'Med Spa',      trade: 'med spas',       avgTicket: 320, missedPerWeek: 9, deadQuotesPerWeek: 7, monthlyVisits: 800, monthlyAdSpend: 1800 },
 ];
 export const industryByKey = (key: string) => INDUSTRIES.find((i) => i.key === key) ?? INDUSTRIES[0];
 
@@ -90,6 +110,7 @@ export const LEAKS: Leak[] = [
   { title: 'No-shows & unconfirmed jobs', body: 'An idle tech window is expensive. Unconfirmed appointments waste them daily.', fix: 'Automatic confirmations + reminders that cut no-shows.' },
   { title: 'Reviews nobody asks for', body: "They've got 14, the competitor has 300. That gap costs you ranking.", fix: 'Auto-request reviews right after a paid job, while you shine.' },
   { title: 'Flying blind', body: 'No clear view of revenue, job margin, or which marketing actually works.', fix: 'One dashboard: leads, booked revenue, and source ROI.' },
+  { title: "Traffic that doesn't convert", body: "You pay for clicks and earn visits — then a slow, vague website sends them away before they ever call. Wasted ad spend and wasted demand.", fix: 'A fast, focused landing page (like this one) that turns visitors into booked calls — with tracking so you can see it working.' },
 ];
 
 export interface Step { num: string; title: string; body: string }

@@ -22,7 +22,7 @@ export default function LeaksDiagram() {
     <section style={{ maxWidth: 1100, margin: '0 auto', padding: '64px 24px 24px' }}>
       <Reveal style={{ textAlign: 'center', marginBottom: 14 }}>
         <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 30, margin: '0 0 10px', color: 'var(--ink)' }}>Where the money leaks out</h2>
-        <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: 0 }}>The same six taps drip in every service business. Tap one to see how we plug it.</p>
+        <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: 0 }}>The same {LEAKS.length} taps drip in every service business. Tap one to see how we plug it.</p>
       </Reveal>
 
       {/* decorative pressure-line: a pipe with six valves */}
@@ -31,7 +31,7 @@ export default function LeaksDiagram() {
           <rect x="0" y="16" width="760" height="8" rx="4" fill="#C2C8D1" />
           <rect x="0" y="16" width="760" height="3" rx="1.5" fill="#fff" opacity=".5" />
           {LEAKS.map((_, i) => {
-            const x = 70 + i * 124;
+            const x = (760 / (LEAKS.length + 1)) * (i + 1);
             const on = active === i;
             return (
               <g key={i}>

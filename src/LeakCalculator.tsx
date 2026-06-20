@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import { Reveal } from './motion';
-import { monthlyLeak, fmtMoney, submitLead } from './config';
+import { monthlyLeak, websiteLeak, fmtMoney, submitLead } from './config';
 import { useFunnel } from './state';
 
 const SAIRA = "'Saira Semi Condensed',sans-serif";
@@ -34,6 +34,9 @@ export default function LeakCalculator() {
   const [ticket, setTicket] = useState(industry.avgTicket);
   const [missed, setMissed] = useState(industry.missedPerWeek);
   const [deadQuotes, setDeadQuotes] = useState(industry.deadQuotesPerWeek);
+  const [visits, setVisits] = useState(industry.monthlyVisits);
+  const [convPct, setConvPct] = useState(2); // % of visits that currently become a lead
+  const [adSpend, setAdSpend] = useState(industry.monthlyAdSpend);
   const [sent, setSent] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -46,11 +49,16 @@ export default function LeakCalculator() {
     setTicket(industry.avgTicket);
     setMissed(industry.missedPerWeek);
     setDeadQuotes(industry.deadQuotesPerWeek);
-  }, [industry.key, industry.avgTicket, industry.missedPerWeek, industry.deadQuotesPerWeek]);
+    setVisits(industry.monthlyVisits);
+    setAdSpend(industry.monthlyAdSpend);
+  }, [industry.key, industry.avgTicket, industry.missedPerWeek, industry.deadQuotesPerWeek, industry.monthlyVisits, industry.monthlyAdSpend]);
 
-  const { fromCalls, fromQuotes, total } = monthlyLeak({ avgTicket: ticket, missedPerWeek: missed, deadQuotesPerWeek: deadQuotes });
+  const { fromCalls, fromQuotes } = monthlyLeak({ avgTicket: ticket, missedPerWeek: missed, deadQuotesPerWeek: deadQuotes });
+  const web = websiteLeak({ avgTicket: ticket, monthlyVisits: visits, currentConv: convPct / 100, monthlyAdSpend: adSpend });
+  const fromWebsite = web.total;
+  const total = fromCalls + fromQuotes + fromWebsite;
   const yearly = total * 12;
-  const barMissedPct = total ? (fromCalls / total) * 100 : 50;
+  const pct = (n: number) => (total ? (n / total) * 100 : 0);
 
   const openForm = () => {
     setShowForm(true);
@@ -71,6 +79,13 @@ export default function LeakCalculator() {
       avgTicket: ticket,
       missedCallsPerWeek: missed,
       deadQuotesPerWeek: deadQuotes,
+      monthlyVisits: visits,
+      currentConversionPct: convPct,
+      monthlyAdSpend: adSpend,
+      leakFromCalls: Math.round(fromCalls),
+      leakFromQuotes: Math.round(fromQuotes),
+      leakFromWebsite: Math.round(fromWebsite),
+      adSpendWasted: Math.round(web.wastedSpend),
       monthlyLeak: Math.round(total),
       yearlyLeak: Math.round(yearly),
       source: 'lead-leak-calculator',
@@ -92,12 +107,20 @@ export default function LeakCalculator() {
 
       <Reveal style={panel}>
         {/* inputs */}
-        <div style={{ padding: '38px 36px' }}>
+        <div style={{ padding: '34px 36px' }}>
           <Slider label="Average job value" value={ticket} min={100} max={5000} step={50} suffix={fmtMoney(ticket)} onChange={setTicket} />
+
+          <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: '#9C3B2C', margin: '4px 0 16px' }}>Your phone &amp; quotes</div>
           <Slider label="Calls you miss per week" value={missed} min={0} max={60} step={1} suffix={String(missed)} onChange={setMissed} />
           <Slider label="Quotes you never follow up" value={deadQuotes} min={0} max={40} step={1} suffix={`${deadQuotes}/wk`} onChange={setDeadQuotes} />
+
+          <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 12, letterSpacing: '.12em', textTransform: 'uppercase', color: '#9C3B2C', margin: '14px 0 16px' }}>Your website &amp; ads</div>
+          <Slider label="Website visits per month" value={visits} min={0} max={5000} step={50} suffix={visits.toLocaleString('en-US')} onChange={setVisits} />
+          <Slider label="Visitors who become a lead" value={convPct} min={1} max={10} step={0.5} suffix={`${convPct}%`} onChange={setConvPct} />
+          <Slider label="Monthly ad / LSA spend" value={adSpend} min={0} max={10000} step={100} suffix={fmtMoney(adSpend)} onChange={setAdSpend} />
+
           <p style={{ fontSize: 12.5, color: 'var(--muted)', margin: '6px 0 0', lineHeight: 1.5 }}>
-            Assumes ~35% of missed calls and ~22% of dead quotes would have booked. Conservative on purpose.
+            Assumes ~35% of missed calls and ~22% of dead quotes would book, a ~6% achievable page conversion, and a 40% close rate on web leads. Conservative on purpose.
           </p>
         </div>
 
@@ -110,13 +133,20 @@ export default function LeakCalculator() {
           {/* split bar */}
           <div style={{ margin: '22px 0 8px' }}>
             <div style={{ display: 'flex', height: 10, borderRadius: 999, overflow: 'hidden', background: 'rgba(255,255,255,.12)' }}>
-              <div style={{ width: `${barMissedPct}%`, background: '#E0795C', transition: 'width .25s ease' }} />
-              <div style={{ flex: 1, background: '#5B6B86', transition: 'width .25s ease' }} />
+              <div style={{ width: `${pct(fromCalls)}%`, background: '#E0795C', transition: 'width .25s ease' }} />
+              <div style={{ width: `${pct(fromQuotes)}%`, background: '#5B6B86', transition: 'width .25s ease' }} />
+              <div style={{ flex: 1, background: '#97A6C2', transition: 'width .25s ease' }} />
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginTop: 9 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 14px', fontSize: 12.5, color: 'rgba(255,255,255,.65)', marginTop: 10 }}>
               <span><span style={{ color: '#E0795C', fontWeight: 700 }}>■</span> Missed calls {fmtMoney(fromCalls)}</span>
               <span><span style={{ color: '#5B6B86', fontWeight: 700 }}>■</span> Dead quotes {fmtMoney(fromQuotes)}</span>
+              <span><span style={{ color: '#97A6C2', fontWeight: 700 }}>■</span> Weak website {fmtMoney(fromWebsite)}</span>
             </div>
+            {web.wastedSpend > 0 && (
+              <div style={{ fontSize: 12, color: 'rgba(255,255,255,.5)', marginTop: 6 }}>
+                Includes ≈ {fmtMoney(web.wastedSpend)}/mo of ad spend wasted on a page that can't convert.
+              </div>
+            )}
           </div>
 
           {/* lead capture */}
