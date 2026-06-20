@@ -91,7 +91,7 @@ export default function Pricing() {
         <span style={{ opacity: .5 }}>·</span>
         <span>{PRICING_META.usageNote}</span>
         <span style={{ opacity: .5 }}>·</span>
-        <span>You only pay for booked jobs the system recovers.</span>
+        <span>Priced against what your audit shows you're losing — built to pay for itself.</span>
       </Reveal>
 
       {/* add-ons */}

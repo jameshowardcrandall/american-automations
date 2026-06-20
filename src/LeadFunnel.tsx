@@ -196,7 +196,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2 4 5v6c0 5 3.4 8.5 8 11 4.6-2.5 8-6 8-11V5l-8-3Z" fill="#fff" /><path d="m9 12 2 2 4-4" stroke="#16243F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
             Veteran-Owned
           </span>
-          {['Free audit — zero obligation', 'You only pay for booked jobs', '30-day pilot — cancel anytime'].map((t) => (
+          {['Free audit — zero obligation', 'Priced to pay for itself', '30-day pilot — cancel anytime'].map((t) => (
             <span key={t} className="lf-pill" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13.5, fontWeight: 600, color: 'var(--ink)', background: 'var(--card)', border: '1px solid var(--border)', padding: '9px 15px', borderRadius: 6 }}>
               <Check size={15} sw={2.6} color="#9C3B2C" />{t}
             </span>
@@ -329,7 +329,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
               <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 13, letterSpacing: '.12em', textTransform: 'uppercase', color: '#E0795C', marginBottom: 10 }}>Where the number comes from</div>
               <p style={{ fontSize: 17, lineHeight: 1.55, fontWeight: 500, margin: '0 0 18px', color: 'rgba(255,255,255,.9)', textWrap: 'pretty' }}>We apply the same leak math from the calculator to an average shop's call volume, lead flow, and ticket size. On your audit, we swap the assumptions for <strong style={{ color: '#fff' }}>your</strong> real numbers — so you leave knowing it to the dollar.</p>
               <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13.5, fontWeight: 600, color: 'rgba(255,255,255,.85)', border: '1px solid rgba(255,255,255,.18)', borderRadius: 6, padding: '8px 13px' }}>
-                <Check size={14} sw={2.6} color="#E0795C" />Veteran-owned · you only pay for booked jobs
+                <Check size={14} sw={2.6} color="#E0795C" />Veteran-owned · priced to pay for itself
               </div>
             </div>
           </div>
@@ -391,7 +391,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
               </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 9, borderTop: '1px solid var(--border)', paddingTop: 20 }}>
-              {['Free — zero obligation', 'You only pay for booked jobs', '30-day pilot — cancel anytime'].map((t) => (
+              {['Free — zero obligation', 'Priced to pay for itself', '30-day pilot — cancel anytime'].map((t) => (
                 <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: 8, fontSize: 13.5, fontWeight: 600, color: 'var(--ink)' }}>
                   <Check size={14} sw={2.6} color="#9C3B2C" />{t}
                 </span>

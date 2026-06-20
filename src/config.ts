@@ -162,7 +162,7 @@ export const FAQ: Faq[] = [
   { q: 'I\'m not plumbing or HVAC — does this still apply?', a: 'It applies to any business that books jobs or appointments: roofing, electrical, landscaping, cleaning, pest, med spas, auto, dental, fitness. The leaks are the same; only the numbers change.' },
   { q: 'Do I have to switch software?', a: 'No. We layer automation on top of the tools you already use — your phone, your CRM, your booking. Nothing gets ripped out.' },
   { q: 'How fast do we see results?', a: 'The #1 leak (missed calls + instant response) is usually live within a week, and it tends to pay for itself before the first invoice.' },
-  { q: 'What does it cost after the free audit?', a: 'A flat monthly pilot with a 30-day cancel-anytime guarantee, and you only pay for booked jobs the system recovers. We\'ll quote it on the call once we see your numbers.' },
+  { q: 'What does it cost after the free audit?', a: 'A one-time setup plus a flat month-to-month plan you can cancel anytime. We price it against what your audit shows you\'re losing, so it\'s built to pay for itself — and if it isn\'t recovering meaningfully more than it costs, we don\'t keep going. We\'ll quote it on the call once we see your numbers.' },
 ];
 
 /* "As seen in" / trust strip — replace with real client or press logos. */
