@@ -17,6 +17,7 @@ export const brand = {
   faint: '#9AA3AE',
   border: '#E2E5EA',
   tagline: 'Stop losing jobs you already paid to get.',
+  lockupTagline: 'Military-grade systems for service businesses',
 };
 
 /* ---- GoHighLevel lead routing ----
@@ -152,6 +153,54 @@ export const FAQ: Faq[] = [
 /* "As seen in" / trust strip — replace with real client or press logos. */
 export const LOGOS = ['HomePro', 'TradeForce', 'ServiceHub', 'BlueCollar Co.', 'MainStreet', 'FieldOps'];
 
+/* ---- Website Conversion Scorecard (doc 12) ----
+   Self-grade tool: each item scored No(0) / Sort of(1) / Yes(2). */
+export interface ScorecardItem { id: string; label: string }
+export interface ScorecardCategory { key: string; title: string; items: ScorecardItem[] }
+export const SCORECARD: ScorecardCategory[] = [
+  { key: 'speed', title: 'Speed & mobile', items: [
+    { id: 'load', label: 'Loads in under 3 seconds on a phone' },
+    { id: 'responsive', label: 'Fully mobile-friendly — tappable, no pinch-zoom' },
+    { id: 'popups', label: 'No pop-up blocking them before they can act' },
+  ] },
+  { key: 'cta', title: 'The call to action', items: [
+    { id: 'taptocall', label: 'Tap-to-call number above the fold (sticky on mobile)' },
+    { id: 'oneaction', label: 'One obvious primary action — not five competing buttons' },
+    { id: 'ctarepeat', label: 'CTA repeated top, middle and bottom' },
+    { id: 'booking', label: 'Online booking option for people who won’t call' },
+  ] },
+  { key: 'message', title: 'The message', items: [
+    { id: 'who', label: 'Who you are, what you do, and where — clear in 3 seconds' },
+    { id: 'why', label: 'A reason to choose you (speed, 24/7, pricing, guarantee)' },
+    { id: 'offer', label: 'A current offer or hook visible without scrolling' },
+  ] },
+  { key: 'trust', title: 'Trust signals', items: [
+    { id: 'reviews', label: 'Google review count + star rating shown' },
+    { id: 'licensed', label: 'Licensed / insured / certifications visible' },
+    { id: 'photos', label: 'Real photos (team, trucks, work) — not stock' },
+    { id: 'guarantee', label: 'A guarantee or warranty stated' },
+    { id: 'badges', label: 'Years in business / veteran-owned / local badges' },
+  ] },
+  { key: 'form', title: 'The form', items: [
+    { id: 'short', label: 'Short — name, phone, problem (no 10-field forms)' },
+    { id: 'mobileform', label: 'Works on mobile and submits without errors' },
+    { id: 'expectation', label: 'Sets a response-time expectation ("we reply in minutes")' },
+  ] },
+  { key: 'tracking', title: 'Tracking & follow-through', items: [
+    { id: 'calltrack', label: 'Call / conversion tracking in place' },
+    { id: 'instant', label: 'Form submissions trigger instant follow-up' },
+    { id: 'pixels', label: 'Retargeting pixels installed (Google / Facebook)' },
+  ] },
+];
+
+export interface Grade { grade: string; label: string; color: string; verdict: string }
+export function scoreToGrade(pct: number): Grade {
+  if (pct >= 0.8) return { grade: 'A', label: 'Converting well', color: '#1F7A52', verdict: "Your page is pulling its weight — the leak is probably elsewhere (traffic or follow-up speed)." };
+  if (pct >= 0.6) return { grade: 'B', label: 'Leaving money on the table', color: '#0E7C86', verdict: 'Decent, but a few targeted fixes would noticeably lift the calls you get from the same traffic.' };
+  if (pct >= 0.4) return { grade: 'C', label: 'Leaking badly', color: '#9C3B2C', verdict: 'A meaningful share of your visitors bounce before calling. A focused rebuild pays for itself fast.' };
+  return { grade: 'D/F', label: 'Burning your ad spend', color: '#9C3B2C', verdict: "This page is actively wasting the clicks you pay for. It's the highest-priority fix you have." };
+}
+
 /* ---- Pricing (customer-facing only; internal strategy stays off the site) ---- */
 export const PRICING_FEATURES = [
   'Missed-call text-back',
@@ -177,23 +226,32 @@ export interface PricingTier {
 export const PRICING_TIERS: PricingTier[] = [
   { key: 'starter', name: 'Starter', price: 297, blurb: 'Stop the biggest leak — missed calls and reviews.',
     has: [true, true, true, false, false, false, false, false], sms: '500 texts/calls included' },
-  { key: 'growth', name: 'Growth', price: 597, blurb: 'The full speed-to-lead engine. Where most shops land.', featured: true, badge: 'Most popular',
+  { key: 'growth', name: 'Growth', price: 997, blurb: 'The full speed-to-lead engine. Where most shops land.', featured: true, badge: 'Most popular',
     has: [true, true, true, true, true, true, false, false], sms: '1,500 texts/calls included' },
-  { key: 'pro', name: 'Pro', price: 997, blurb: 'Everything, plus memberships and a strategist in your corner.',
+  { key: 'pro', name: 'Pro', price: 1497, blurb: 'Everything, plus memberships and a strategist in your corner.',
     has: [true, true, true, true, true, true, true, true], sms: '4,000 texts/calls included' },
+];
+
+/* Add-ons that attach to any tier (raise ARPU without a new sale). */
+export interface AddOn { name: string; price: string; note: string }
+export const ADDONS: AddOn[] = [
+  { name: 'High-converting landing page', price: '$1,997', note: 'Mobile-first, sub-3s load, sticky tap-to-call, trust stack, wired to speed-to-lead. Optimization +$297/mo (free with Pro).' },
+  { name: 'Website Conversion Audit', price: '$249', note: 'Deep teardown + prioritized fix roadmap. Credited toward a landing-page build.' },
+  { name: 'AI receptionist (24/7)', price: 'Custom', note: 'Answers and books every call around the clock, even after hours.' },
+  { name: 'Paid-ads management', price: 'Custom', note: 'Google LSA / Google / Facebook — managed for a flat fee + % of spend.' },
 ];
 /* Public scarcity hook. The *alternative* founding offer (performance pilot)
    stays internal — only the simplest, cleanest offer goes on the site. */
 export const FOUNDING = {
   spots: 3,
   lead: 'Founding-client offer',
-  offer: 'First 3 shops get the $750 setup waived + first month free.',
+  offer: 'First 3 shops get the $989 setup waived + first month free.',
   cta: 'Claim your spot',
 };
 
 export const PRICING_META = {
   auditPrice: 'Free',
-  setupPrice: 750,
+  setupPrice: 989,
   annualNote: 'Pay annually, get 2 months free (~17% off).',
   usageNote: 'Usage beyond your included allowance is billed at cost + 20%.',
 };

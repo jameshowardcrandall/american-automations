@@ -3,6 +3,7 @@ import { Reveal, CountUp, LiveLeak, RotatingWord, Marquee } from './motion';
 import { brand, TRADES, MARQUEE, STEPS, EXPECTATIONS, CASE_STUDY, INDUSTRIES, monthlyLeak, fmtMoney } from './config';
 import { useFunnel } from './state';
 import LeakCalculator from './LeakCalculator';
+import ConversionScorecard from './ConversionScorecard';
 import LeaksDiagram from './LeaksDiagram';
 import Faq from './Faq';
 import Pricing from './Pricing';
@@ -216,10 +217,10 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
       <section style={{ maxWidth: 1100, margin: '0 auto', padding: '56px 24px 24px' }}>
         <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 40, alignItems: 'center' }}>
           <div>
-            <p style={{ fontFamily: SAIRA, fontWeight: 600, fontSize: 14, textTransform: 'uppercase', color: '#9C3B2C', margin: '0 0 8px', letterSpacing: '.16em' }}>Our mission</p>
-            <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 32, lineHeight: 1.08, margin: '0 0 14px', color: 'var(--ink)' }}>From saving the government millions to saving Main Street.</h2>
-            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: '0 0 14px' }}>We cut our teeth doing back-office automation for the federal government — stripping out waste, tightening operations, making slow systems fast. Taxpayer money saved, processes that used to take weeks done in minutes.</p>
-            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: 0 }}>Now we're pointing that same military-grade discipline at the <strong style={{ color: 'var(--ink)' }}>backbone of America</strong> — the service businesses that keep the lights on. Same playbook, new mission: keep more of the money you earn, and book more of the jobs you already paid to reach.</p>
+            <p style={{ fontFamily: SAIRA, fontWeight: 600, fontSize: 14, textTransform: 'uppercase', color: '#9C3B2C', margin: '0 0 8px', letterSpacing: '.16em' }}>Why we exist</p>
+            <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 32, lineHeight: 1.08, margin: '0 0 14px', color: 'var(--ink)' }}>Built in the military. Now working for Main Street.</h2>
+            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: '0 0 14px' }}>I'm a solution architect. For years I built automation in the military — where a dropped handoff isn't just lost revenue; people are counting on the system to work. So I build systems where <strong style={{ color: 'var(--ink)' }}>nothing falls through the cracks</strong>, by design.</p>
+            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: 0 }}>American Automations brings that same operational rigor to the <strong style={{ color: 'var(--ink)' }}>backbone of America</strong> — the service businesses losing jobs to missed calls, slow follow-up, and dead quotes. We find exactly where revenue is leaking, put a dollar on it, and build the system that stops it. Same problem, different uniform.</p>
           </div>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
             {[
@@ -242,6 +243,9 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
 
       {/* LEAK CALCULATOR */}
       <LeakCalculator />
+
+      {/* CONVERSION SCORECARD */}
+      <ConversionScorecard />
 
       {/* VSL VIDEO (optional) */}
       {showVideo && (
@@ -347,7 +351,10 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
           <div style={{ padding: '42px 38px', borderRight: '1px solid var(--border)', background: 'var(--bg)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 22 }}>
               <BrandMark size={30} />
-              <span style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 15, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--ink)' }}>American Automations</span>
+              <span>
+                <span style={{ display: 'block', fontFamily: SAIRA, fontWeight: 700, fontSize: 15, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--ink)' }}>American Automations</span>
+                <span style={{ display: 'block', fontSize: 10.5, letterSpacing: '.05em', color: 'var(--muted)', marginTop: 1 }}>{brand.lockupTagline}</span>
+              </span>
             </div>
             <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 27, margin: '0 0 14px', lineHeight: 1.15, color: 'var(--ink)' }}>Book your free lead-leak audit</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 11, margin: '20px 0 24px' }}>
@@ -380,10 +387,13 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
       {/* FOOTER */}
       <footer style={{ maxWidth: 1100, margin: '48px auto 0', padding: '48px 24px 84px', borderTop: '1px solid var(--border)', display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between', gap: 16 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <BrandMark size={28} />
-          <span style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 14, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--ink)' }}>American Automations</span>
+          <BrandMark size={30} />
+          <span>
+            <span style={{ display: 'block', fontFamily: SAIRA, fontWeight: 700, fontSize: 14, letterSpacing: '.06em', textTransform: 'uppercase', color: 'var(--ink)' }}>American Automations</span>
+            <span style={{ display: 'block', fontSize: 11, letterSpacing: '.06em', color: 'var(--muted)', marginTop: 2 }}>{brand.lockupTagline} · Veteran-owned</span>
+          </span>
         </div>
-        <span style={{ fontSize: 13.5, color: 'var(--muted)' }}>{brand.tagline} · © 2026 · placeholder copy</span>
+        <span style={{ fontSize: 13.5, color: 'var(--muted)' }}>{brand.tagline} · © 2026</span>
       </footer>
     </div>
   );

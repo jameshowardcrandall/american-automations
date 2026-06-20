@@ -1,4 +1,4 @@
-import { PRICING_FEATURES, PRICING_TIERS, PRICING_META, fmtMoney } from './config';
+import { PRICING_FEATURES, PRICING_TIERS, PRICING_META, ADDONS, fmtMoney } from './config';
 import { Reveal } from './motion';
 
 const SAIRA = "'Saira Semi Condensed',sans-serif";
@@ -86,6 +86,24 @@ export default function Pricing() {
         <span>{PRICING_META.usageNote}</span>
         <span style={{ opacity: .5 }}>·</span>
         <span>You only pay for booked jobs the system recovers.</span>
+      </Reveal>
+
+      {/* add-ons */}
+      <Reveal style={{ marginTop: 40 }}>
+        <div style={{ textAlign: 'center', marginBottom: 18 }}>
+          <p style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: 'var(--muted)', margin: 0 }}>Bolt-on anytime</p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 14 }}>
+          {ADDONS.map((a) => (
+            <div key={a.name} className="lf-card" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 8, padding: 20 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 10, marginBottom: 6 }}>
+                <span style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 16, color: 'var(--ink)' }}>{a.name}</span>
+                <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 16, color: '#9C3B2C', whiteSpace: 'nowrap' }}>{a.price}</span>
+              </div>
+              <p className="lf-body" style={{ fontSize: 13.5, color: 'var(--muted)', margin: 0, lineHeight: 1.5 }}>{a.note}</p>
+            </div>
+          ))}
+        </div>
       </Reveal>
     </section>
   );
