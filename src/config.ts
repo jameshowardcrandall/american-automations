@@ -25,7 +25,7 @@ export const brand = {
 /* ---- Who We Are (doc 13) ---- */
 export interface Founder { name: string; role: string; bio: string }
 export const FOUNDERS: Founder[] = [
-  { name: 'Jagger', role: 'Operations & delivery', bio: 'DoD-space operator who ran mission-critical systems where "good enough" wasn\'t. Leads operations, delivery, and getting your system live and watertight.' },
+  { name: 'Jagger', role: 'Operations & delivery', bio: 'Same DoD-space rigor as James — plus he\'s run service businesses from the owner\'s seat: roofing and junk removal, and he built and exited a vent-cleaning company. He\'s lived your shop\'s leaks firsthand. Leads operations and delivery.' },
   { name: 'James', role: 'Solution architect', bio: 'Spent years diagnosing where operations bleed time and money, then architecting the automation that fixes it. Leads discovery and systems design.' },
 ];
 export const VALUES: { title: string; body: string }[] = [
