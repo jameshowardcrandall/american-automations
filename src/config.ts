@@ -130,3 +130,40 @@ export const FAQ: Faq[] = [
 
 /* "As seen in" / trust strip — replace with real client or press logos. */
 export const LOGOS = ['HomePro', 'TradeForce', 'ServiceHub', 'BlueCollar Co.', 'MainStreet', 'FieldOps'];
+
+/* ---- Pricing (customer-facing only; internal strategy stays off the site) ---- */
+export const PRICING_FEATURES = [
+  'Missed-call text-back',
+  'Automated review requests',
+  'Appointment reminders',
+  'Speed-to-lead automation',
+  'Monthly reactivation campaign',
+  'Reporting dashboard',
+  'Membership / maintenance renewals',
+  'Priority support + quarterly strategy',
+];
+
+export interface PricingTier {
+  key: string;
+  name: string;
+  price: number;        // monthly
+  blurb: string;
+  featured?: boolean;
+  badge?: string;
+  has: boolean[];       // aligns to PRICING_FEATURES
+  sms: string;
+}
+export const PRICING_TIERS: PricingTier[] = [
+  { key: 'starter', name: 'Starter', price: 297, blurb: 'Stop the biggest leak — missed calls and reviews.',
+    has: [true, true, true, false, false, false, false, false], sms: '500 texts/calls included' },
+  { key: 'growth', name: 'Growth', price: 597, blurb: 'The full speed-to-lead engine. Where most shops land.', featured: true, badge: 'Most popular',
+    has: [true, true, true, true, true, true, false, false], sms: '1,500 texts/calls included' },
+  { key: 'pro', name: 'Pro', price: 997, blurb: 'Everything, plus memberships and a strategist in your corner.',
+    has: [true, true, true, true, true, true, true, true], sms: '4,000 texts/calls included' },
+];
+export const PRICING_META = {
+  auditPrice: 'Free',
+  setupPrice: 750,
+  annualNote: 'Pay annually, get 2 months free (~17% off).',
+  usageNote: 'Usage beyond your included allowance is billed at cost + 20%.',
+};

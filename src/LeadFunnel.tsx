@@ -5,6 +5,7 @@ import { useFunnel } from './state';
 import LeakCalculator from './LeakCalculator';
 import LeaksDiagram from './LeaksDiagram';
 import Faq from './Faq';
+import Pricing from './Pricing';
 import { LogoWall, BeforeAfter } from './Proof';
 import CalEmbed from './CalEmbed';
 
@@ -117,7 +118,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
             <span className="lf-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
               <a href="#calc" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>Calculator</a>
               <a href="#how" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>How it works</a>
-              <a href="#proof" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>Results</a>
+              <a href="#pricing" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>Pricing</a>
             </span>
             <ThemeToggle />
             <a href="#book" className="lf-cta-nav" style={{ fontFamily: SAIRA, background: '#16243F', color: '#fff', textDecoration: 'none', fontWeight: 600, fontSize: 14, padding: '10px 18px', borderRadius: 6, letterSpacing: '.06em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Book free audit</a>
@@ -328,6 +329,9 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
           <span style={{ fontSize: 13, color: 'var(--muted)' }}>New and building our client roster — so we lead with the math, not borrowed hype. The audit is where you see your real numbers.</span>
         </Reveal>
       </section>
+
+      {/* PRICING */}
+      <Pricing />
 
       {/* FAQ */}
       <Faq />
