@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// Served as a GitHub Pages *project* site at /american-automations/.
-// If you later point a custom domain at the repo root, change base back to '/'.
+// Served from the custom domain root (american-automations.com).
+// CNAME lives in public/ so the Pages deploy keeps the custom domain.
 export default defineConfig({
-  base: '/american-automations/',
+  base: '/',
   plugins: [react()],
 });
