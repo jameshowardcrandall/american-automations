@@ -231,7 +231,9 @@ export const PRICING_FEATURES = [
 export interface PricingTier {
   key: string;
   name: string;
-  price: number;        // monthly
+  price: number;        // monthly (ignored when custom)
+  priceLabel?: string;  // shown instead of the price when custom (e.g. "By request")
+  custom?: boolean;     // by-request / enterprise tier
   blurb: string;
   featured?: boolean;
   badge?: string;
@@ -243,14 +245,15 @@ export const PRICING_TIERS: PricingTier[] = [
     has: [true, true, true, false, false, false, false, false], sms: '500 texts/calls included' },
   { key: 'growth', name: 'Growth', price: 997, blurb: 'The full speed-to-lead engine. Where most shops land.', featured: true, badge: 'Most popular',
     has: [true, true, true, true, true, true, false, false], sms: '1,500 texts/calls included' },
-  { key: 'pro', name: 'Pro', price: 1497, blurb: 'Everything, plus memberships and a strategist in your corner.',
-    has: [true, true, true, true, true, true, true, true], sms: '4,000 texts/calls included' },
+  { key: 'mission', name: 'Mission-Integrated', price: 1497, custom: true, priceLabel: 'By request', badge: 'Custom / enterprise',
+    blurb: 'Multi-location, memberships, and deep integrations — done-for-you everything, conversion optimization included.',
+    has: [true, true, true, true, true, true, true, true], sms: 'Usage & volume sized to you' },
 ];
 
 /* Add-ons that attach to any tier (raise ARPU without a new sale). */
 export interface AddOn { name: string; price: string; note: string }
 export const ADDONS: AddOn[] = [
-  { name: 'High-converting landing page', price: '$1,997', note: 'Mobile-first, sub-3s load, sticky tap-to-call, trust stack, wired to speed-to-lead. Optimization +$297/mo (free with Pro).' },
+  { name: 'High-converting landing page', price: '$1,997', note: 'Mobile-first, sub-3s load, sticky tap-to-call, trust stack, wired to speed-to-lead. Optimization +$297/mo (included with Mission-Integrated).' },
   { name: 'Website Conversion Audit', price: '$249', note: 'Deep teardown + prioritized fix roadmap. Credited toward a landing-page build.' },
   { name: 'AI receptionist (24/7)', price: 'Custom', note: 'Answers and books every call around the clock, even after hours.' },
   { name: 'Paid-ads management', price: 'Custom', note: 'Google LSA / Google / Facebook — managed for a flat fee + % of spend.' },

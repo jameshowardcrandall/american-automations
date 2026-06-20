@@ -38,12 +38,18 @@ export default function Pricing() {
               transform: featured ? 'translateY(-6px)' : undefined,
             }}>
               {tier.badge && (
-                <span style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', fontFamily: SAIRA, fontWeight: 700, fontSize: 11.5, letterSpacing: '.12em', textTransform: 'uppercase', color: '#fff', background: '#9C3B2C', padding: '6px 14px', borderRadius: 999, whiteSpace: 'nowrap', boxShadow: '0 6px 16px -6px rgba(156,59,44,.6)' }}>★ {tier.badge}</span>
+                <span style={{ position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)', fontFamily: SAIRA, fontWeight: 700, fontSize: 11.5, letterSpacing: '.12em', textTransform: 'uppercase', color: '#fff', background: featured ? '#9C3B2C' : '#16243F', padding: '6px 14px', borderRadius: 999, whiteSpace: 'nowrap', boxShadow: featured ? '0 6px 16px -6px rgba(156,59,44,.6)' : '0 6px 16px -6px rgba(22,36,63,.5)' }}>{featured ? '★ ' : ''}{tier.badge}</span>
               )}
               <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 22, textTransform: 'uppercase', letterSpacing: '.02em' }}>{tier.name}</div>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, margin: '10px 0 4px' }}>
-                <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 46, lineHeight: 1, color: featured ? '#E0795C' : 'var(--ink)' }}>{fmtMoney(tier.price)}</span>
-                <span style={{ fontSize: 15, color: featured ? 'rgba(255,255,255,.6)' : 'var(--muted)', fontWeight: 600 }}>/mo</span>
+                {tier.custom ? (
+                  <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 34, lineHeight: 1.2, color: featured ? '#E0795C' : 'var(--ink)' }}>{tier.priceLabel}</span>
+                ) : (
+                  <>
+                    <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 46, lineHeight: 1, color: featured ? '#E0795C' : 'var(--ink)' }}>{fmtMoney(tier.price)}</span>
+                    <span style={{ fontSize: 15, color: featured ? 'rgba(255,255,255,.6)' : 'var(--muted)', fontWeight: 600 }}>/mo</span>
+                  </>
+                )}
               </div>
               <p style={{ fontSize: 14.5, color: featured ? 'rgba(255,255,255,.72)' : 'var(--muted)', margin: '0 0 18px', minHeight: 42 }}>{tier.blurb}</p>
 
@@ -54,7 +60,7 @@ export default function Pricing() {
                 color: featured ? '#fff' : 'var(--ink)',
                 border: featured ? 'none' : '1px solid var(--border)',
                 boxShadow: featured ? '0 8px 22px -6px rgba(156,59,44,.5)' : undefined,
-              }}>Book your free audit →</a>
+              }}>{tier.custom ? 'Talk to us →' : 'Book your free audit →'}</a>
 
               <div style={{ height: 1, background: featured ? 'rgba(255,255,255,.14)' : 'var(--border)', margin: '20px 0 16px' }} />
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
