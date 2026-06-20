@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from 'react';
 import { Reveal, CountUp, LiveLeak, RotatingWord, Marquee } from './motion';
-import { brand, TRADES, MARQUEE, STEPS, EXPECTATIONS, CASE_STUDY, INDUSTRIES, monthlyLeak, fmtMoney } from './config';
+import { brand, TRADES, MARQUEE, STEPS, EXPECTATIONS, CASE_STUDY, INDUSTRIES, FOUNDERS, VALUES, monthlyLeak, fmtMoney } from './config';
 import { useFunnel } from './state';
 import LeakCalculator from './LeakCalculator';
 import ConversionScorecard from './ConversionScorecard';
@@ -122,7 +122,7 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
           <nav style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
             <span className="lf-nav-links" style={{ display: 'flex', alignItems: 'center', gap: 22 }}>
               <a href="#calc" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>Calculator</a>
-              <a href="#how" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>How it works</a>
+              <a href="#about" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>About</a>
               <a href="#pricing" className="lf-nav-link" style={{ textDecoration: 'none', fontWeight: 500, fontSize: 15 }}>Pricing</a>
             </span>
             <ThemeToggle />
@@ -213,28 +213,50 @@ export default function LeadFunnel({ heroMode = 'hookB', showVideo = true, showL
       {/* TRUST STRIP */}
       <LogoWall />
 
-      {/* MISSION — gov't efficiency → Main Street */}
-      <section style={{ maxWidth: 1100, margin: '0 auto', padding: '56px 24px 24px' }}>
-        <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 40, alignItems: 'center' }}>
+      {/* WHO WE ARE — the founders (doc 13) */}
+      <section id="about" style={{ maxWidth: 1100, margin: '0 auto', padding: '56px 24px 24px' }}>
+        <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(280px,1fr))', gap: 40, alignItems: 'center', marginBottom: 32 }}>
           <div>
-            <p style={{ fontFamily: SAIRA, fontWeight: 600, fontSize: 14, textTransform: 'uppercase', color: '#9C3B2C', margin: '0 0 8px', letterSpacing: '.16em' }}>Why we exist</p>
-            <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 32, lineHeight: 1.08, margin: '0 0 14px', color: 'var(--ink)' }}>Built in the military. Now working for Main Street.</h2>
-            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: '0 0 14px' }}>I'm a solution architect. For years I built automation in the military — where a dropped handoff isn't just lost revenue; people are counting on the system to work. So I build systems where <strong style={{ color: 'var(--ink)' }}>nothing falls through the cracks</strong>, by design.</p>
-            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: 0 }}>American Automations brings that same operational rigor to the <strong style={{ color: 'var(--ink)' }}>backbone of America</strong> — the service businesses losing jobs to missed calls, slow follow-up, and dead quotes. We find exactly where revenue is leaking, put a dollar on it, and build the system that stops it. Same problem, different uniform.</p>
+            <p style={{ fontFamily: SAIRA, fontWeight: 600, fontSize: 14, textTransform: 'uppercase', color: '#9C3B2C', margin: '0 0 8px', letterSpacing: '.16em' }}>Who we are</p>
+            <h2 style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 32, lineHeight: 1.08, margin: '0 0 14px', color: 'var(--ink)' }}>From the DoD to your front office.</h2>
+            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: '0 0 14px' }}>We're <strong style={{ color: 'var(--ink)' }}>Jagger and James</strong> — two operators who spent our careers automating mission-critical work inside the Department of Defense, saving warfighters time and the government money. We led teams of up to 23 and briefed multiple generals. There, a dropped handoff isn't lost revenue — it's a warfighter waiting. So we learned to build systems that <strong style={{ color: 'var(--ink)' }}>don't miss</strong>.</p>
+            <p style={{ fontSize: 16.5, color: 'var(--muted)', margin: 0 }}>Your shop has the exact same problem we spent years solving — just in a different uniform. The missed call, the lead nobody got back to, the quote that died in an inbox. Same leak, real money. We diagnose it, put a dollar on it, and build the system that stops it.</p>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
-            {[
-              ['Veteran', 'Owned & operated'],
-              ['Gov-grade', 'Systems & security'],
-              ['U.S.-based', 'Real people, real support'],
-              ['24/7', 'Never miss another lead'],
-            ].map(([big, small]) => (
-              <div key={big} className="lf-card" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 8, padding: '20px 18px' }}>
-                <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 22, color: 'var(--ink)' }}>{big}</div>
-                <div className="lf-body" style={{ fontSize: 13.5, color: 'var(--muted)', marginTop: 2 }}>{small}</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+            {FOUNDERS.map((f) => (
+              <div key={f.name} className="lf-card" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 10, padding: '20px 22px', display: 'flex', gap: 16, alignItems: 'flex-start' }}>
+                <div style={{ flex: 'none', width: 52, height: 52, borderRadius: '50%', background: 'linear-gradient(135deg,#21365C,#16243F)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid #2B3C5C' }}>
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M5 13 L12 8 L19 13 M5 17 L12 12 L19 17" stroke="#E0795C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                </div>
+                <div>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
+                    <span style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 19, color: 'var(--ink)' }}>{f.name}</span>
+                    <span style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 11.5, letterSpacing: '.1em', textTransform: 'uppercase', color: '#9C3B2C' }}>{f.role}</span>
+                  </div>
+                  <p className="lf-body" style={{ fontSize: 14, color: 'var(--muted)', margin: '4px 0 0', lineHeight: 1.5 }}>{f.bio}</p>
+                </div>
               </div>
             ))}
           </div>
+        </Reveal>
+
+        {/* values */}
+        <Reveal style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: 14, marginBottom: 26 }}>
+          {VALUES.map((v) => (
+            <div key={v.title} className="lf-card" style={{ background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 8, padding: '18px 18px' }}>
+              <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 16, color: 'var(--ink)', marginBottom: 4 }}>{v.title}</div>
+              <div className="lf-body" style={{ fontSize: 13.5, color: 'var(--muted)', lineHeight: 1.5 }}>{v.body}</div>
+            </div>
+          ))}
+        </Reveal>
+
+        {/* signature phrase banner */}
+        <Reveal style={{ position: 'relative', borderRadius: 10, overflow: 'hidden', background: 'radial-gradient(120% 140% at 0% 0%, #21365C 0%, #16243F 55%, #0E1A30 100%)', border: '1px solid #2B3C5C', padding: '30px 32px', textAlign: 'center' }}>
+          <div aria-hidden style={{ position: 'absolute', top: 0, left: 0, right: 0, height: 3, display: 'flex' }}>
+            <div style={{ flex: 1, background: '#16243F' }} /><div style={{ width: 120, background: '#9C3B2C' }} /><div style={{ width: 56, background: '#C2C8D1' }} />
+          </div>
+          <div style={{ fontFamily: SAIRA, fontWeight: 700, fontSize: 12.5, letterSpacing: '.16em', textTransform: 'uppercase', color: '#E0795C', marginBottom: 8 }}>{brand.trustLine}</div>
+          <div style={{ fontFamily: SAIRA, fontWeight: 800, fontSize: 30, color: '#fff', lineHeight: 1.1 }}>{brand.signature}</div>
         </Reveal>
       </section>
 

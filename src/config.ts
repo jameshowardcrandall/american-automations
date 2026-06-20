@@ -18,7 +18,22 @@ export const brand = {
   border: '#E2E5EA',
   tagline: 'Stop losing jobs you already paid to get.',
   lockupTagline: 'Military-grade systems for service businesses',
+  signature: 'We take your operations to warfighter speed.',
+  trustLine: 'Veteran-owned. Built on follow-through.',
 };
+
+/* ---- Who We Are (doc 13) ---- */
+export interface Founder { name: string; role: string; bio: string }
+export const FOUNDERS: Founder[] = [
+  { name: 'Jagger', role: 'Operations & delivery', bio: 'DoD-space operator who ran mission-critical systems where "good enough" wasn\'t. Leads operations, delivery, and getting your system live and watertight.' },
+  { name: 'James', role: 'Solution architect', bio: 'Spent years diagnosing where operations bleed time and money, then architecting the automation that fixes it. Leads discovery and systems design.' },
+];
+export const VALUES: { title: string; body: string }[] = [
+  { title: 'Mission first', body: 'Your booked jobs and your time are the mission. Everything we build serves that.' },
+  { title: 'No dropped handoffs', body: 'If it can fall through a crack, we automate the catch — calls, leads, quotes, follow-ups.' },
+  { title: 'Prove it, then scale', body: 'Fix the biggest leak, show the ROI, expand. No hand-waving.' },
+  { title: 'Plain talk', body: "We speak like operators, not marketers. You'll always know what we're doing and why." },
+];
 
 /* ---- GoHighLevel lead routing ----
    Paste your GHL *Inbound Webhook* URL below to send calculator leads into GHL.
